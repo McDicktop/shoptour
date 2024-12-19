@@ -1,0 +1,49 @@
+.table {
+
+    margin: 0 auto;
+    margin-top: 2rem;
+
+    width: fit-content;
+
+    border-collapse: collapse;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+}
+
+.table th {
+    background: #a19e9e;
+    font-weight: bold;
+    padding: 5px;
+    border: 1px solid #393737;
+}
+
+.table td {
+    padding: 3px 5px;
+    border: 1px solid #393737;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    min-width: 80px;
+}
+
+.clickableSection {
+    text-align: center !important;
+    cursor: pointer;
+}
+
+.popup_btns {
+    width: 80px;
+    padding: 6px;
+    border: 1px solid black;
+    border-radius: 12px;
+    cursor: pointer;
+    margin: 20px 20px 0 0;
+}
+
+.popup_btns:hover {
+    background-color: #a19e9e;
+}

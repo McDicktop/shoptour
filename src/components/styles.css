@@ -1,0 +1,90 @@
+.signup_form {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 194px;
+    border-radius: 10px;
+    background: #a19e9e;
+    padding: 10px;
+}
+
+.input_signup {
+    width: 154px;
+    padding-right: 30px;
+    padding-left: 10px;
+    height: 30px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+}
+
+.signup_btn {
+    border: none;
+    border-radius: 4px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.password_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* .pass_level_0 {
+    margin-top: 4px;
+    height: 10px;
+}
+
+.pass_level_1 {
+    margin-top: 4px;
+    width: 50px;
+    height: 10px;
+    background: red;
+}
+
+.pass_level_2 {
+    margin-top: 4px;
+    width: 100px;
+    height: 10px;
+    background: rgb(41, 52, 206);
+}
+
+.pass_level_3 {
+    margin-top: 4px;
+    width: 150px;
+    height: 10px;
+    background: rgb(22, 253, 33);
+}
+
+.pass_level_4 {
+    margin-top: 4px;
+    width: 193px;
+    height: 10px;
+    background: rgb(16, 216, 223);
+} */
+
+.field_comment {
+    margin-top: 4px;
+    height: 10px;
+    font-size: .8rem;
+}
+
+.hide_ico {
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 24px;
+    width: 24px;
+    position: absolute;
+    top: 4px;
+    right: 6px;
+}
+
+.pass_level {
+    margin-top: 4px;
+    margin-left: 1px;
+    height: 10px;
+    background: rgb(16, 216, 223);
+}
