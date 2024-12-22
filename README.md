@@ -1,4 +1,4 @@
-#Command for commits
+# Command for commits
 
 - Add
 ```bash 
