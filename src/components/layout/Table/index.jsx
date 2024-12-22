@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useProduct } from "../../../context/dataContext";
 import { toast } from "react-toastify";
 import CustomPopup from "../Popup";
@@ -7,6 +8,8 @@ import { useFilter } from "../../../context/filterContext";
 import "./styles.css";
 
 function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
+    const navigate = useNavigate();
+
     const columnArr = [
         "code",
         "title",
@@ -18,8 +21,14 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
         "sale",
     ];
 
-    const { page, totalPages, changePage, changeTotalPages, filter, setFieldsVisibility } =
-        useFilter();
+    const {
+        page,
+        totalPages,
+        changePage,
+        changeTotalPages,
+        filter,
+        setFieldsVisibility,
+    } = useFilter();
 
     const popupCloseHandler = () => {
         setWarningVisibility(false);
@@ -38,8 +47,8 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
         setFieldsVisibility(
             actualKeys.map((name) => ({ name, isVisible: true }))
         );
-        changePage(1);                              //  ПОСЛЕ ИЗМЕНЕНИЯ КАТЕГОРИИ ИЛИ ВВОДА В ПОИСКОВОЙ СТРОКЕ ПЕРЕХОД НА 1 СТР.
-    }, [filter.search, filter.category, setFieldsVisibility, changePage]);
+        changePage(1); //  ПОСЛЕ ИЗМЕНЕНИЯ КАТЕГОРИИ ИЛИ ВВОДА В ПОИСКОВОЙ СТРОКЕ ПЕРЕХОД НА 1 СТР.
+    }, [filter.search, filter.category]);
 
     function filterProductsArray(search) {
         const filtered = data.reduce((acc, current) => {
@@ -56,7 +65,10 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
             return acc;
         }, []);
 
-        const result = filterCat === null ? filtered : filtered.filter((el) => el.type === filterCat);
+        const result =
+            filterCat === null
+                ? filtered
+                : filtered.filter((el) => el.type === filterCat);
 
         changeTotalPages(Math.ceil(result.length / amount));
 
@@ -75,9 +87,7 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
 
     return (
         <>
-            {filter.fields &&
-                filter.fields.some((el) => el.isVisible) &&
-                filterProductsArray(searchQuery).length > 0 ? (
+            {filterProductsArray(searchQuery).length > 0 && filter.fields && filter.fields.some((el) => el.isVisible) ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -86,6 +96,7 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                                 .map((name, ind) => {
                                     return <th key={`${ind}`}>{name.name}</th>;
                                 })}
+                            <th>View</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -114,9 +125,20 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                                             <td key={`table_${key}`}>
                                                 {key !== "sale"
                                                     ? value
-                                                    : !value.status ? 'No sale' : value.value}
+                                                    : !value.status
+                                                    ? "No sale"
+                                                    : value.value}
                                             </td>
                                         ))}
+                                        <td
+                                            className="clickableSection"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                navigate(`/product/${_id}`);
+                                            }}
+                                        >
+                                            🔎
+                                        </td>
                                         <td
                                             className="clickableSection"
                                             onClick={() => {
@@ -139,6 +161,14 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                             })}
                     </tbody>
                 </table>
+            ) : filter.fields && filter.fields.every((el) => !el.isVisible) ? (
+                <h1
+                    style={{
+                        textAlign: "center",
+                    }}
+                >
+                    No selected fields...
+                </h1>
             ) : (
                 <h1
                     style={{

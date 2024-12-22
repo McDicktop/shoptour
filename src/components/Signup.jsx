@@ -190,11 +190,11 @@ function SignupForm() {
                 className="signup_btn"
                 disabled={!isFilled()}
             >
-                Sign up (Регистрация)
+                Sign up
             </button>
 
-            <button onClick={handleFormNavigateSignIn}>
-                Sign up (Авторизация)
+            <button className="underline" onClick={handleFormNavigateSignIn}>
+                Already have an account?
             </button>
         </form>
     );

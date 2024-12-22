@@ -1,13 +1,13 @@
 // import PropTypes from "prop-types";
 
-function AddIcon({ width = 24, height = 24, color = "#303030" }) {
+function AddIcon({ width = 24, height = 24, color = "#0d0d0d" }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             width="24"
             height="24"
-            color="#0d0d0d"
+            color={color}
             fill="none"
         >
             <path

@@ -15,6 +15,21 @@ export const DataProvider = ({ children }) => {
 
     const [categories, setCategories] = useState([]);   // ДОБАВИЛ СОСТОЯНИЕ ДЛЯ КАТЕГОРИЙ ТОВАРОВ
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const shopData = await getProducts();
+            setData(shopData);
+
+            const cats = Array.from(new Set(shopData.map((el) => el.type)));    // ПОЛУЧАЮ ВСЕ ВИДЫ КАТЕГОРИЙ ИЗ ДАННЫХ В БД
+            cats.unshift('all');
+            setCategories(cats);
+        };
+        fetchData();
+    }, []);
+
+
+
     const deleteProduct = async (id) => {
         const res = await removeProduct(id);
 
@@ -69,20 +84,11 @@ export const DataProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const shopData = await getProducts();
-            setData(shopData);
-
-            const cats = Array.from(new Set(shopData.map((el) => el.type)));    // ПОЛУЧАЮ ВСЕ ВИДЫ КАТЕГОРИЙ ИЗ ДАННЫХ В БД
-            cats.unshift('all');
-            setCategories(cats);
-        };
-        fetchData();
-    }, []);
+    const getProduct = (id) => data.find(el => el._id === id)
 
     const contextValue = {
         data,
+        getProduct,
         categories,
         deleteProduct,
         addProduct,

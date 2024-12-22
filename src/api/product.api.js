@@ -11,6 +11,15 @@ export const getProducts = async () => {
     }
 }
 
+export const getProductById = async (id) => {
+    try {
+        const res = await axios.get(backend_url + 'product/' + id);
+        return res.data;
+    } catch (e) {
+        return e;
+    }
+}
+
 export const addProductApi = async (formData) => {
     try {
         const token = localStorage.getItem('token');

@@ -5,14 +5,17 @@ import "./index.css";
 import { DataProvider } from "./context/dataContext.jsx";
 import { UserProvider } from "./context/userContext.jsx";
 import { FilterProvider } from "./context/filterContext.jsx";
+import { BasketProvider } from "./context/basketContext.jsx";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
         <UserProvider>
             <DataProvider>
-                <FilterProvider>
-                    <App />
-                </FilterProvider>
+                <BasketProvider>
+                    <FilterProvider>
+                        <App />
+                    </FilterProvider>
+                </BasketProvider>
             </DataProvider>
         </UserProvider>
     </StrictMode>

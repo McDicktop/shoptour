@@ -97,11 +97,11 @@ function SigninForm() {
                 className="signup_btn"
                 disabled={!isFilled()}
             >
-                Sign in (Авторизация)
+                Sign In
             </button>
 
-            <button onClick={handleFormNavigateSignUp}>
-                Sign up (Регистрация)
+            <button className="underline" onClick={handleFormNavigateSignUp}>
+                No account yet?
             </button>
         </form>
     );

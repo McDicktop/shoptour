@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react";
 import CustomPopup from "./layout/Popup";
-import AddForm from "./layout/Product/addForm";
-import EditForm from "./layout/Product/editForm";
+import AddForm from "./layout/Forms/addForm";
+import EditForm from "./layout/Forms/editForm";
 import Table from "./layout/Table";
 import AddIcon from "./assets/icons/add.icon";
 import { useFilter } from "../context/filterContext";
-import FieldsSelectForm from "./layout/Product/fieldsSelectForm";
+import FieldsSelectForm from "./layout/Forms/fieldsSelectForm";
 import { useProduct } from "../context/dataContext";
 
 function AdminPanel() {
@@ -67,14 +67,8 @@ function AdminPanel() {
                 }}
             >
                 <button
-                    className="addBtn"
                     onClick={() => setAddVisibility(!addVisibility)}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                    }}
+                    className="w-24 h-10 p-1 border-black border-[1px] flex justify-center items-center rounded-2xl bg-gray-300 font-bold hover:bg-gray-400"
                 >
                     <AddIcon />
                     Add
@@ -84,12 +78,7 @@ function AdminPanel() {
                     type="text"
                     value={filter.search}
                     onChange={(e) => setSearch(e.target.value)}
-                    style={{
-                        width: "200px",
-                        height: "32px",
-                        borderRadius: "12px",
-                        border: "1px solid black",
-                    }}
+                    className="w-48 h-10 pl-4 pr-4 border-black border-[1px] rounded-2xl font-normal"
                 />
 
                 <select
@@ -98,6 +87,7 @@ function AdminPanel() {
                     }}
                     name="filter"
                     id="filter_id"
+                    className="w-28 border-[1px] border-black rounded-2xl h-10 p-2"
                 >
                     <option value="none">None</option>
                     <option value="price_up">Price UP</option>
@@ -111,29 +101,18 @@ function AdminPanel() {
                     }}
                     name="cat"
                     id="cat_id"
+                    className="w-28 border-[1px] border-black rounded-2xl h-10 p-2"
                 >
-
                     {categories && categories.map((category, ind) => {
                         return (
                             <option key={`cat_${ind}`} value={category}>{category}</option>
                         )
                     })}
-
-
-                    {/* <option value="none">None</option>
-                    <option value="price_up">Price UP</option>
-                    <option value="price_down">Price DOWN</option> */}
                 </select>
 
                 <button
-                    className="addBtn"
+                    className="w-24 h-10 p-1 border-black border-[1px] flex justify-center items-center rounded-2xl bg-gray-300 font-bold hover:bg-gray-400"
                     onClick={() => setFieldsSelectVisiility(!fieldsSelectVisiility)}
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                    }}
                 >
                     Select
                 </button>
