@@ -15,17 +15,16 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "./common/InputField";
-import UserValidation from '../utils/validateUser';
+import UserValidation from "../utils/validateUser";
 import { createUser } from "../api/user.api";
 import hide from "./assets/imgs/hide.png";
 import show from "./assets/imgs/show.png";
 import "./styles.css";
 
 function SignupForm() {
-
     const navigate = useNavigate();
 
-    const levelColor = ['red', 'blue', 'green'];
+    const levelColor = ["red", "blue", "green"];
 
     const validation = new UserValidation();
 
@@ -37,7 +36,7 @@ function SignupForm() {
 
     const [fieldsStatus, setFieldsStatus] = useState({
         username: "",
-        email: ""
+        email: "",
     });
 
     const [isFormFilled, setIsFormFilled] = useState({
@@ -57,7 +56,7 @@ function SignupForm() {
             setUser((prev) => ({ ...prev, [key]: value }));
             try {
                 switch (key) {
-                    case 'username': {
+                    case "username": {
                         validation.usernameValidation(value);
                         setIsFormFilled((prev) => ({
                             ...prev,
@@ -65,7 +64,7 @@ function SignupForm() {
                         }));
                         break;
                     }
-                    case 'email': {
+                    case "email": {
                         validation.emailValidation(value);
                         setIsFormFilled((prev) => ({
                             ...prev,
@@ -88,30 +87,34 @@ function SignupForm() {
         [setUser, setIsFormFilled, validation]
     );
 
-    const submitHandler = useCallback((e) => {
-        e.preventDefault();
-        async function postAuth() {
-            const data = await createUser({ ...user });
-            if (data) {
-                navigate('/signin')
+    const submitHandler = useCallback(
+        (e) => {
+            e.preventDefault();
+            async function postAuth() {
+                const data = await createUser({ ...user });
+                if (data) {
+                    navigate("/signin");
+                }
             }
-        }
-        postAuth();
-    }, [user, navigate]);
-
+            postAuth();
+        },
+        [user, navigate]
+    );
 
     function handleFormNavigateSignIn() {
         navigate("/signin");
     }
 
     return (
-        <form className="signup_form">
-            <div className="username_container">
+        <form className="px-10 mt-20 py-8 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700">
+            <div className="relative mb-4">
                 <InputField
-                    className={"input_signup"}
+                    className={
+                        "w-64 mb-1 px-4 py-1 border-[1px] rounded-xl bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                    }
                     id={"username_signup"}
                     value={user.username}
-                    placeholder={"username"}
+                    label="Username"
                     onChange={(e) => inputHandler("username", e)}
                     onBlur={(e) => {
                         try {
@@ -129,15 +132,25 @@ function SignupForm() {
                         }
                     }}
                 />
-                <div className="field_comment">{fieldsStatus.username}</div>
+                <div
+                    className={`h-4 text-xs ${
+                        fieldsStatus.username === "Correct"
+                            ? "text-slate-200"
+                            : "text-red-400"
+                    }`}
+                >
+                    {fieldsStatus.username}
+                </div>
             </div>
 
-            <div className="email_container">
+            <div className="relative mb-4">
                 <InputField
-                    className={"input_signup"}
+                    className={
+                        "w-64 mb-1 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                    }
                     id={"email_signup"}
                     value={user.email}
-                    placeholder={"e-mail"}
+                    label={"E-mail"}
                     onChange={(e) => inputHandler("email", e)}
                     onBlur={(e) => {
                         try {
@@ -155,31 +168,44 @@ function SignupForm() {
                         }
                     }}
                 />
-                <div className="field_comment">{fieldsStatus.email}</div>
+                <div
+                    className={`h-4 text-xs ${
+                        fieldsStatus.email === "Correct"
+                            ? "text-slate-200"
+                            : "text-red-400"
+                    }`}
+                >
+                    {fieldsStatus.email}
+                </div>
             </div>
 
-            <div className="password_container">
+            <div className="relative">
                 <InputField
-                    className={"input_signup"}
+                    className={
+                        "w-64 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                    }
                     id={"password_signup"}
                     value={user.password}
-                    placeholder={"password"}
+                    label="Password"
                     onChange={(e) => inputHandler("password", e)}
                     type={isPassShow ? "text" : "password"}
                 />
 
                 <div
-                    className="hide_ico"
+                    className="w-6 h-6 bg-cover bg-no-repeat  absolute top-[30px] right-[12px] invert-[.90]"
                     style={{
                         backgroundImage: `url(${isPassShow ? show : hide})`,
                     }}
                     onClick={() => setIsPassShow((prev) => !prev)}
                 ></div>
+
                 <div
-                    className="pass_level"
+                    className="h-2 rounded mt-1 ml-2"
                     style={{
-                        width: `${isFormFilled.password * 64}px`,
-                        backgroundColor: `${levelColor[isFormFilled.password - 1]}`
+                        width: `${isFormFilled.password * 80}px`,
+                        backgroundColor: `${
+                            levelColor[isFormFilled.password - 1]
+                        }`,
                     }}
                 ></div>
             </div>
@@ -187,13 +213,16 @@ function SignupForm() {
             <button
                 onClick={(e) => submitHandler(e)}
                 type="submit"
-                className="signup_btn"
+                className="w-64 mt-10 border-[1px] rounded-2xl px-3 py-1 text-slate-200 font-semibold cursor-pointer hover:bg-sky-950"
                 disabled={!isFilled()}
             >
                 Sign up
             </button>
 
-            <button className="underline" onClick={handleFormNavigateSignIn}>
+            <button
+                className="w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-950"
+                onClick={handleFormNavigateSignIn}
+            >
                 Already have an account?
             </button>
         </form>

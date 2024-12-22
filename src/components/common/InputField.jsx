@@ -12,8 +12,12 @@ function InputField({
 
 }) {
     return (
-        <div className="input_wrapper">
-            <label htmlFor={id}>{label}</label>
+        // <div className="input_wrapper">
+        <div className='flex flex-col'>
+            <label
+                className='text-slate-200'  
+                htmlFor={id}
+            >{label}</label>
             <input
                 className={className}
                 type={type}
