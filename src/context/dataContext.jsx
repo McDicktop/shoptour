@@ -76,6 +76,7 @@ export const DataProvider = ({ children }) => {
             }
             case 400: {
                 console.log(res.response.data.message)
+                if (res.response.data.message.code === 11000) return { message: "The code already exists" }
                 return { message: res.response.data.message[0].message }
             }
             default: {

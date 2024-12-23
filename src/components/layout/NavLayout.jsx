@@ -2,6 +2,12 @@ import React from "react";
 import { ToastContainer, Bounce } from "react-toastify";
 import { useUser } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
+import BasketIcon from "../assets/icons/basket.icon";
+import AccountIcon from "../assets/icons/account.icon";
+import LoginIcon from "../assets/icons/login.icon";
+import LogoutIcon from "../assets/icons/logout.icon";
+import RegisterIcon from "../assets/icons/register.icon";
+import HomeIcon from "../assets/icons/home.icon";
 
 function NavLayout({ children }) {
     const { handleLogout } = useUser();
@@ -10,69 +16,62 @@ function NavLayout({ children }) {
 
     return (
         <div className="flex flex-col gap-2 justify-start">
-            {/* <nav className="flex flex-row justify-between h-20 w-full border-[1px] ">
-                <nav
-                    onClick={() => window.location.replace(`/`)}
-                    className="cursor-pointer text-3xl font-bold"
-                >
-                    Home
-                </nav>
 
-                <div className="flex border-[1px] border-black">
-                    <nav className="border-[1px] border-black">
-                        <a href="/basket">Basket</a>
-                    </nav>
+            <nav className="flex item-center justify-between p-4">
 
-                    <button onClick={handleLogout}>Log out</button>
-
-                    <nav className="border-[1px] border-black">
-                        <a href="">Sigh in</a>
-                    </nav>
+                <div>
+                    <button
+                        onClick={() => navigate("/")}
+                    >
+                        <HomeIcon width={40} height={40} />
+                    </button>
                 </div>
-            </nav> */}
 
-            <nav className="flex item-center justify-end p-4">
-                <button
-                    className="border-[1px] border-black"
-                    onClick={() => navigate("/basket")}
-                >
-                    Basket
-                </button>
 
-                {localStorage.getItem("token") ? (
-                    <>
-                        <button
-                            className="border-[1px] border-black"
-                            onClick={() => navigate("/account")}
-                        >
-                            Account
-                        </button>
-                        <button
-                            className="border-[1px] border-black"
-                            onClick={() => {
-                                handleLogout();
-                                navigate("/");
-                            }}
-                        >
-                            Logout
-                        </button>
-                    </>
-                ) : (
-                    <>
-                        <button
-                            className="border-[1px] border-black"
-                            onClick={() => navigate("/signin")}
-                        >
-                            Sign In
-                        </button>
-                        <button
-                            className="border-[1px] border-black"
-                            onClick={() => navigate("/signup")}
-                        >
-                            Sign Up
-                        </button>
-                    </>
-                )}
+
+                <div>
+
+                    <button
+                        onClick={() => navigate("/basket")}
+                    >
+                        <BasketIcon width={40} height={40} />
+                    </button>
+
+                    {localStorage.getItem("token") ? (
+                        <>
+                            <button
+                                onClick={() => navigate("/account")}
+                            >
+                                <AccountIcon width={40} height={40} />
+                            </button>
+                            <button
+                                onClick={() => {
+                                    handleLogout();
+                                    navigate("/");
+                                }}
+                            >
+                                <LogoutIcon width={40} height={40} />
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <button
+                                onClick={() => navigate("/signin")}
+                            >
+                                <LoginIcon width={40} height={40} />
+                            </button>
+                            <button
+                                onClick={() => navigate("/signup")}
+                            >
+                                <RegisterIcon width={40} height={40} />
+                            </button>
+                        </>
+                    )}
+
+
+                </div>
+
+
             </nav>
 
             <main>{children}</main>

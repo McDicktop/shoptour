@@ -18,52 +18,26 @@ function Main() {
 
     return (
         <>
-            <button
-                onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/account");
-                }}
-            >
-                Account
-            </button>
-
             {products.length > 0 && (
-                <div className="grid grid-cols-4 grid-rows-5 gap-4">
+                <div className="grid grid-cols-5 gap-10 w-fit justify-self-center">
                     {products.map((el, ind) => (
-                        <div key={`ind_${ind}`} className="border-[1px]">
-                            <h1>{el.title}</h1>
-                            <h2>{el.description}</h2>
+                        <div key={`ind_${ind}`} className="border-[1px] border-black rounded-xl w-72 h-96 flex flex-col">
+
                             <div
-                                className="w-96 h-96 border-[1px] border-gray-800 rounded-xl bg-cover bg-center"
+                                className="w-64 h-64 mt-4 border-[1px] border-gray-400 rounded-xl bg-cover bg-center mx-auto"
                                 style={{
                                     backgroundImage: `url(${el.images[0]})`,
                                 }}
                             />
+
+                            <h1 className="mx-4 font-semibold text-md">{el.title}</h1>
+                            <h1 className="mx-4 font-bold text-2xl">{`${el.price}$`}</h1>
+                            <button
+                                className="border-[1px] rounded-2xl w-64 mx-auto block mt-1 py-1 cursor-pointer bg-green-500 font-bold text-slate-200 hover:bg-green-600"
+                            >Buy</button>
                         </div>
                     ))}
                 </div>
-                // <table className="table">
-                //     <thead>
-                //         <tr>
-                //             <th>Title</th>
-                //             <th>Price</th>
-                //             <th>Quantity</th>
-                //             <th>Rating</th>
-                //         </tr>
-                //     </thead>
-                //     <tbody>
-                //         {products.map((el, index) => {
-                //             return (
-                //                 <tr key={`ind_${index}`}>
-                //                     <td>{el.title}</td>
-                //                     <td>{el.price}</td>
-                //                     <td>{el.quantity}</td>
-                //                     <td>{el.rating}</td>
-                //                 </tr>
-                //             );
-                //         })}
-                //     </tbody>
-                // </table>
             )}
         </>
     );

@@ -156,7 +156,7 @@ function AdminPanel() {
             <CustomPopup
                 onClose={popupCloseHandler}
                 show={fieldsSelectVisiility}
-                title="Select to view"
+                title="Select categories to view in the table"
             >
                 <FieldsSelectForm closeForm={popupCloseHandler} />
             </CustomPopup>

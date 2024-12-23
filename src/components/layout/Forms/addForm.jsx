@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useProduct } from "../../../context/dataContext";
 import InputField from "../../common/InputField";
 import Validation from "../../../utils/validateProduct";
-import "./styles.css";
+// import "./styles.css";
 
 function AddForm({ closeForm }) {
   const validation = new Validation();
@@ -17,6 +17,7 @@ function AddForm({ closeForm }) {
     const newPhotos = Array.from(event.target.files);
     if (photos.length + newPhotos.length > 4) {
       setError("Можно загрузить только 4 фото!");
+      toast("You can upload no more than 4 photos!")
       return;
     }
 
@@ -99,8 +100,12 @@ function AddForm({ closeForm }) {
   };
 
   return (
-    <form className="form" onSubmit={(e) => handleSubmit(e)}>
+    <form
+      className="px-10 py-4 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700"
+      onSubmit={(e) => handleSubmit(e)}
+    >
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Code"}
         placeholder="Enter product code"
         id="code_add"
@@ -109,6 +114,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Title"}
         placeholder="Enter product title"
         id="title_add"
@@ -117,6 +123,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Type"}
         placeholder="Enter product type"
         id="type_add"
@@ -125,6 +132,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Description"}
         placeholder="Enter product description"
         id="description_add"
@@ -133,6 +141,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Price"}
         placeholder="Enter product price"
         id="price_add"
@@ -141,6 +150,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Rating"}
         placeholder="Enter product rating"
         id="rating_add"
@@ -149,6 +159,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Quantity"}
         placeholder="Enter product quantity"
         id="quantity_add"
@@ -157,6 +168,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Sale"}
         placeholder="Enter product sale"
         id="sale_add"
@@ -167,16 +179,7 @@ function AddForm({ closeForm }) {
       <div>
         <label
           htmlFor="photo_input_field"
-          style={{
-            cursor: `${photos.length < 4 ? 'pointer' : 'default'}`,
-            border: "1px solid black",
-            borderRadius: "12px",
-            padding: "0.5rem",
-            margin: "0 auto",
-            display: "block",
-            width: "fit-content",
-            opacity: `${photos.length < 4 ? '1' : '0.5'}`
-          }}
+          className={`border-[1px] rounded-2xl py-1 w-64 mx-auto block mt-4  text-center  text-slate-200 ${photos.length >= 4 ? 'opacity-25' : 'cursor-pointer hover:bg-sky-800'}`}
         >
           Добавить фото
         </label>
@@ -192,21 +195,20 @@ function AddForm({ closeForm }) {
             pointerEvents: "none"
           }}
         />
-
-        {/* <span>{photos.length}</span> */}
       </div>
 
-      <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", height: "70px" }}>
         {photos.map((photo, index) => (
           <div key={index} style={{ position: "relative" }}>
             <img
               src={photo.preview}
               alt={`Photo ${index + 1}`}
               style={{
-                width: "100px",
-                height: "100px",
+                width: "60px",
+                height: "60px",
                 objectFit: "cover",
-                borderRadius: "10px",
+                borderRadius: "25%",
+                border: "1px solid white"
               }}
             />
             <button
@@ -217,13 +219,16 @@ function AddForm({ closeForm }) {
                 top: "5px",
                 right: "5px",
                 backgroundColor: "red",
+                width: "1.2rem",
+                height: "1.2rem",
                 color: "white",
                 borderRadius: "50%",
                 border: "none",
                 cursor: "pointer",
+                fontSize: ".8rem",
               }}
             >
-              x
+              X
             </button>
           </div>
         ))}
@@ -231,8 +236,11 @@ function AddForm({ closeForm }) {
 
       {error && console.log(error)}
 
-      <button type="submit" className={`submit_btn`} disabled={!isFilled()}>
-        Submit
+      <button
+        type="submit"
+        className={`border-[1px] rounded-2xl w-64 mx-auto block mt-4 py-1 cursor-pointer ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`}
+        disabled={!isFilled()}
+      >Submit
       </button>
     </form>
   );

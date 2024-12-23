@@ -11,19 +11,20 @@
 }
 
 .popup {
-  margin: 70px auto;
+  margin: 20px auto;
   padding: 20px;
-  background: #fff;
-  border-radius: 5px;
-  width: 400px;
+  background: #2d3142;
+  border-radius: 20px;
+  width: 500px;
   position: relative;
   transition: all 5s ease-in-out;
 }
 
 .popup h2 {
   margin-top: 0;
-  color: #333;
+  color: #bdbdbd;
   font-family: Tahoma, Arial, sans-serif;
+  margin-bottom: 10px;
 }
 
 .popup .close {
@@ -34,7 +35,7 @@
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
+  color: #bbb6b6;
 }
 
 .popup .close:hover {

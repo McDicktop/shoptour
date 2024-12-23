@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
 import { useFilter } from "../../../context/filterContext";
-import "./styles.css";
 
 function CheckField({ name, status }) {
     const { setFieldsVisibility, filter } = useFilter();
     return (
-        <div className="field">
-            <label htmlFor={`${name}`}>{`${name}`}</label>
+        <div
+            className="relative flex flex-col"
+        >
+            <label
+                htmlFor={`${name}`}
+                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px] cursor-pointer"
+            >{`${name}`}</label>
             <input
                 id={`${name}`}
                 type="checkbox"
@@ -16,6 +20,7 @@ function CheckField({ name, status }) {
                     const newArr = filter.fields.map((el) => el.name !== name ? el : { name, isVisible: !status })
                     setFieldsVisibility(newArr);
                 }}
+                className="absolute right-[10px] top-[10px] w-4 h-4"
             />
         </div>
     );
@@ -26,9 +31,10 @@ function FieldsSelectForm({ closeForm }) {
     const fields = ['code', 'title', 'type', 'description', 'price', 'rating', 'quantity', 'sale'];
 
     return (
-        <form>
+        <form className="px-10 py-4 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700">
             <button
                 type="button"
+                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 hover:bg-sky-600"
                 onClick={() => {
                     const activeField = Array.from(
                         document.querySelectorAll('[name="group"]')
@@ -50,6 +56,7 @@ function FieldsSelectForm({ closeForm }) {
 
             <button
                 type="button"
+                className="w-64 mb-10 px-4 py-1 border-[1px] rounded-2xl bg-gray-500 text-slate-200 hover:bg-sky-600"
                 onClick={() => {
                     setFieldsVisibility(fields.map((name) => ({ name, isVisible: true })));
                     closeForm();
@@ -59,7 +66,11 @@ function FieldsSelectForm({ closeForm }) {
             <div className="select_fields">
                 {filter.fields && filter.fields.map((el, ind) => {
                     return (
-                        <CheckField key={`${ind}`} name={el.name} status={el.isVisible} />
+                        <CheckField
+                            key={`${ind}`}
+                            name={el.name}
+                            status={el.isVisible}
+                        />
                     )
                 })}
             </div>
