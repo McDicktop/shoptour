@@ -1,18 +1,22 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
+
 import CustomPopup from "./layout/Popup";
+
 import AddForm from "./layout/Forms/addForm";
 import EditForm from "./layout/Forms/editForm";
 import Table from "./layout/Table";
-import AddIcon from "./assets/icons/add.icon";
-import { useFilter } from "../context/filterContext";
 import FieldsSelectForm from "./layout/Forms/fieldsSelectForm";
+
 import { useProduct } from "../context/dataContext";
+import { useFilter } from "../context/filterContext";
+
+import AddIcon from "./assets/icons/add.icon";
+import ViewIcon from "./assets/icons/view.icon";
 
 function AdminPanel() {
     const amount = 10;
 
     const { categories } = useProduct();
-
     const { filter, setCategory, setSort, setSearch } = useFilter();
 
     const [addVisibility, setAddVisibility] = useState(false);
@@ -20,22 +24,6 @@ function AdminPanel() {
     const [fieldsSelectVisiility, setFieldsSelectVisiility] = useState(false);
     const [isSuccess, setIsSuccess] = useState(null);
     const [productEdit, setProductEdit] = useState(null);
-
-    const handleChangeSort = useCallback(
-        (e) => {
-            setSort(e.target.value);
-        },
-        [setSort]
-    );
-
-    const handleChangeCategory = useCallback(
-        (e) => {
-            // if (e.target.value === 'all') setCategory(null)
-            // setCategory(e.target.value)
-            setCategory(e.target.value === 'all' ? null : e.target.value)
-        },
-        [setCategory]
-    );
 
     const popupCloseHandler = () => {
         setAddVisibility(false);
@@ -57,64 +45,54 @@ function AdminPanel() {
 
     return (
         <>
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "20px",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
+            <div className="flex flex-row gap-4 items-center justify-center">
                 <button
                     onClick={() => setAddVisibility(!addVisibility)}
-                    className="w-24 h-10 p-1 border-black border-[1px] flex justify-center items-center rounded-2xl bg-gray-300 font-bold hover:bg-gray-400"
+                    className="w-24 h-8 p-1 flex justify-center rounded-2xl bg-gray-300 font-semibold hover:bg-gray-400"
                 >
-                    <AddIcon />
-                    Add
+                    <AddIcon />Add
                 </button>
 
                 <input
                     type="text"
                     value={filter.search}
+                    placeholder="type to search..."
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-48 h-10 pl-4 pr-4 border-black border-[1px] rounded-2xl font-normal"
+                    className="w-48 h-8 pl-4 pr-4 border rounded-2xl font-normal"
                 />
 
                 <select
-                    onChange={(e) => {
-                        handleChangeSort(e);
-                    }}
+                    onChange={(e) => setSort(e.target.value)}
                     name="filter"
                     id="filter_id"
-                    className="w-28 border-[1px] border-black rounded-2xl h-10 p-2"
+                    className="w-24 border rounded-2xl h-8 p-1 cursor-pointer"
                 >
-                    <option value="none">None</option>
-                    <option value="price_up">Price UP</option>
-                    <option value="price_down">Price DOWN</option>
+                    <option value="none">Unsort</option>
+                    <option value="price_up">Price ⬆️</option>
+                    <option value="price_down">Price ⬇️</option>
                 </select>
 
-
                 <select
-                    onChange={(e) => {
-                        handleChangeCategory(e);
-                    }}
+                    onChange={(e) => setCategory(e.target.value === "all" ? null : e.target.value) }
                     name="cat"
                     id="cat_id"
-                    className="w-28 border-[1px] border-black rounded-2xl h-10 p-2"
+                    className="w-24 border rounded-2xl h-8 p-1 cursor-pointer"
                 >
-                    {categories && categories.map((category, ind) => {
-                        return (
-                            <option key={`cat_${ind}`} value={category}>{category}</option>
-                        )
-                    })}
+                    {categories &&
+                        categories.map((category, ind) => {
+                            return (
+                                <option key={`cat_${ind}`} value={category}>
+                                    {category}
+                                </option>
+                            );
+                        })}
                 </select>
 
                 <button
-                    className="w-24 h-10 p-1 border-black border-[1px] flex justify-center items-center rounded-2xl bg-gray-300 font-bold hover:bg-gray-400"
-                    onClick={() => setFieldsSelectVisiility(!fieldsSelectVisiility)}
+                    className="w-24 h-8 p-1 flex justify-center rounded-2xl bg-gray-300 font-semibold hover:bg-gray-400"
+                    onClick={ () => setFieldsSelectVisiility(!fieldsSelectVisiility) }
                 >
-                    Select
+                    <ViewIcon />View
                 </button>
             </div>
 
@@ -132,9 +110,7 @@ function AdminPanel() {
                 title="Add product"
             >
                 {isSuccess === null ? (
-                    <AddForm
-                        closeForm={popupCloseHandler}
-                    />
+                    <AddForm closeForm={popupCloseHandler} />
                 ) : (
                     <div>{isSuccess}</div>
                 )}
@@ -151,7 +127,6 @@ function AdminPanel() {
                     productProp={productEdit}
                 />
             </CustomPopup>
-
 
             <CustomPopup
                 onClose={popupCloseHandler}

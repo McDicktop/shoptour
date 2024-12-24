@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useBasket } from "../context/basketContext";
 import { useProduct } from "../context/dataContext";
 
@@ -40,7 +40,7 @@ function Basket() {
                         return (
                             <div
                                 key={`basket_item_${index}`}
-                                className="flex items-center justify-betweeen border p-4 rounded-lg shadow-sm"
+                                className="flex items-center justify-betweeen border p-4 rounded-lg shadow-sm w-fit"
                             >
                                 <input
                                     type="checkbox"
@@ -54,35 +54,40 @@ function Basket() {
                                         ])
                                     }
                                     checked={activeItems[index]}
+                                    className="ml-4"
                                 />
-                                <p className="text-lg font-semibold">
+                                <p className="text-lg font-semibold w-96 ml-2">
                                     {product.title}
                                 </p>
                                 <button
                                     onClick={() =>
                                         decreaseProductAmount(product._id)
                                     }
-                                    className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                                    className="text-xl h-6 w-6 flex items-center justify-center pb-1 bg-red-500 text-white rounded-2xl hover:bg-red-600"
                                 >
                                     -
                                 </button>
-                                <span className="txt-lg font-medium w-[80px] rounded border border-black text-center">
+                                <span className="txt-lg font-medium w-10 mx-2 rounded-xl border-[2px] text-center">
                                     {el.amount}
                                 </span>
                                 <button
                                     onClick={() =>
                                         increaseProductAmount(product._id)
                                     }
-                                    className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                                    className="text-xl h-6 w-6 flex items-center justify-center pb-1 bg-green-500 text-white rounded-2xl hover:bg-green-600"
                                 >
                                     +
                                 </button>
 
 
-                                <div className="flex flex-col item-center justify-center">
-                                    <span>{product.price * el.amount}</span>
+                                <div className="flex flex-col item-center justify-center h-10 w-12 ml-3">
+                                    <span
+                                        className="font-semibold"
+                                    >{`${product.price * el.amount}$`}</span>
                                     {el.amount > 1 && (
-                                        <span>{product.price}</span>
+                                        <span
+                                            className="text-xs"
+                                        >{`${product.price}$`}</span>
                                     )}
                                 </div>
                             </div>
@@ -91,7 +96,7 @@ function Basket() {
 
                     <button
                         onClick={() => clearBasket()}
-                        className="mt-4 w-full px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
+                        className="mt-4 w-96 px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
                     >
                         Clear basket
                     </button>

@@ -19,26 +19,10 @@ import {
     Navigate,
 } from "react-router-dom";
 
-import "./App.css";
+// import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 import NavLayout from "./components/layout/NavLayout";
-
-// function PrivateRoute({ isAuthenticated, children }) {
-//     return isAuthenticated ? children : <Navigate to={"/signin"} />;
-// }
-
-// function AdminRoute({ isAuthenticated, isAdmin, children }) {
-//     return isAuthenticated ? (
-//         isAdmin ? (
-//             children
-//         ) : (
-//             <Navigate to={"/account"} />
-//         )
-//     ) : (
-//         <Navigate to={"/signin"} />
-//     );
-// }
 
 function PrivateRoute({ isAuthenticated, isAdmin, children }) {
     // ИЗМЕНИЛ PRIVATE ROUTE
@@ -112,7 +96,7 @@ function App() {
 
                         <Route
                             path="/basket"
-                            element={<Basket />}                            
+                            element={<Basket />}
                         />
 
                         <Route path="/product/:id" element={<ProductView />} />

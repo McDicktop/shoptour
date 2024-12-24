@@ -10,18 +10,6 @@ function ProductView() {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    // const basketHandle = () => {
-    //     const arrOfIds = basket.reduce((acc, item) => [...acc, item.id], []);
-    //     if (!arrOfIds.includes(id)) {
-    //         addBasketProduct({
-    //             _id: product._id
-    //         })
-    //         return;
-    //     }
-    //     removeBasketProduct(id)
-    // }
-
-
     useEffect(() => {
         const getProduct = async () => {
             const product = await getProductById(id);
@@ -63,7 +51,7 @@ function ProductView() {
                         <button
                             className="w-24 h-10 p-1 border-black border-[1px] rounded-2xl bg-gray-300 font-bold hover:bg-gray-400"
                             onClick={() => {
-                                if(!basketIncludes(product._id)) {
+                                if (!basketIncludes(product._id)) {
                                     addBasketProduct(product._id);
                                     return;
                                 }

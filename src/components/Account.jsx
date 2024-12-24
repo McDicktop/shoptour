@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function Account() {
     const navigate = useNavigate();
-    const { handleLogout, user, isAdmin } = useUser();
+    const { user, isAdmin } = useUser();
 
     return (
         <div>

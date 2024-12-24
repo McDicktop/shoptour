@@ -17,7 +17,7 @@ function NavLayout({ children }) {
     return (
         <div className="flex flex-col gap-2 justify-start">
 
-            <nav className="flex item-center justify-between p-4">
+            <nav className="flex item-center justify-between p-4 border-b sticky">
 
                 <div>
                     <button
@@ -33,6 +33,7 @@ function NavLayout({ children }) {
 
                     <button
                         onClick={() => navigate("/basket")}
+                        className="mr-4"
                     >
                         <BasketIcon width={40} height={40} />
                     </button>
@@ -41,6 +42,7 @@ function NavLayout({ children }) {
                         <>
                             <button
                                 onClick={() => navigate("/account")}
+                                className="mr-4"
                             >
                                 <AccountIcon width={40} height={40} />
                             </button>
@@ -57,6 +59,7 @@ function NavLayout({ children }) {
                         <>
                             <button
                                 onClick={() => navigate("/signin")}
+                                className="mr-4"
                             >
                                 <LoginIcon width={40} height={40} />
                             </button>

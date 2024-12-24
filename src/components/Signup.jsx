@@ -19,7 +19,7 @@ import UserValidation from "../utils/validateUser";
 import { createUser } from "../api/user.api";
 import hide from "./assets/imgs/hide.png";
 import show from "./assets/imgs/show.png";
-import "./styles.css";
+// import "./styles.css";
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -133,11 +133,10 @@ function SignupForm() {
                     }}
                 />
                 <div
-                    className={`h-4 text-xs ${
-                        fieldsStatus.username === "Correct"
-                            ? "text-slate-200"
-                            : "text-red-400"
-                    }`}
+                    className={`h-4 text-xs ${fieldsStatus.username === "Correct"
+                        ? "text-slate-200"
+                        : "text-red-400"
+                        }`}
                 >
                     {fieldsStatus.username}
                 </div>
@@ -169,11 +168,10 @@ function SignupForm() {
                     }}
                 />
                 <div
-                    className={`h-4 text-xs ${
-                        fieldsStatus.email === "Correct"
-                            ? "text-slate-200"
-                            : "text-red-400"
-                    }`}
+                    className={`h-4 text-xs ${fieldsStatus.email === "Correct"
+                        ? "text-slate-200"
+                        : "text-red-400"
+                        }`}
                 >
                     {fieldsStatus.email}
                 </div>
@@ -203,9 +201,8 @@ function SignupForm() {
                     className="h-2 rounded mt-1 ml-2"
                     style={{
                         width: `${isFormFilled.password * 80}px`,
-                        backgroundColor: `${
-                            levelColor[isFormFilled.password - 1]
-                        }`,
+                        backgroundColor: `${levelColor[isFormFilled.password - 1]
+                            }`,
                     }}
                 ></div>
             </div>
@@ -213,14 +210,14 @@ function SignupForm() {
             <button
                 onClick={(e) => submitHandler(e)}
                 type="submit"
-                className="w-64 mt-10 border-[1px] rounded-2xl px-3 py-1 text-slate-200 font-semibold cursor-pointer hover:bg-sky-950"
+                className={`border-[1px] w-64 rounded-2xl px-3 py-1 mt-10 ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`}
                 disabled={!isFilled()}
             >
                 Sign up
             </button>
 
             <button
-                className="w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-950"
+                className="w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-800"
                 onClick={handleFormNavigateSignIn}
             >
                 Already have an account?

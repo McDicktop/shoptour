@@ -99,7 +99,7 @@ function SigninForm() {
                 onClick={(e) => submitHandler(e)}
                 type="submit"
                 className={
-                    "w-64 mt-10 border-[1px] rounded-2xl px-3 py-1 text-slate-200 font-semibold cursor-pointer hover:bg-sky-950"
+                    `border-[1px] w-64 rounded-2xl px-3 py-1 mt-10 ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`
                 }
                 disabled={!isFilled()}
             >
@@ -108,7 +108,7 @@ function SigninForm() {
 
             <button
                 className={
-                    "w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-950"
+                    "w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-800"
                 }
                 onClick={handleFormNavigateSignUp}
             >

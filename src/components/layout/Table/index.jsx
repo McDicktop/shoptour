@@ -126,8 +126,8 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                                                 {key !== "sale"
                                                     ? value
                                                     : !value.status
-                                                    ? "No sale"
-                                                    : value.value}
+                                                        ? "No sale"
+                                                        : value.value}
                                             </td>
                                         ))}
                                         <td
