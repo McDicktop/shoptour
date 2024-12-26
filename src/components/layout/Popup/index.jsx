@@ -20,7 +20,8 @@ const CustomPopup = (props) => {
       style={{
         visibility: show ? "visible" : "hidden",
         opacity: show ? "1" : "0",
-        pointerEvents: show ? 'all' : 'none'
+        pointerEvents: show ? 'all' : 'none',
+        zIndex: 20
       }}
       className={popupStyles.overlay}
     >

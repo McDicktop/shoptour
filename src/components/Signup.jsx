@@ -19,7 +19,6 @@ import UserValidation from "../utils/validateUser";
 import { createUser } from "../api/user.api";
 import hide from "./assets/imgs/hide.png";
 import show from "./assets/imgs/show.png";
-// import "./styles.css";
 
 function SignupForm() {
     const navigate = useNavigate();
@@ -124,7 +123,6 @@ function SignupForm() {
                                 ["username"]: "Correct",
                             }));
                         } catch (e) {
-                            console.log(e.message);
                             setFieldsStatus((prev) => ({
                                 ...prev,
                                 ["username"]: "Invalid username",
@@ -159,7 +157,6 @@ function SignupForm() {
                                 ["email"]: "Correct",
                             }));
                         } catch (e) {
-                            console.log(e.message);
                             setFieldsStatus((prev) => ({
                                 ...prev,
                                 ["email"]: "Invalid e-mail",

@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { useProduct } from "../../../context/dataContext";
 import InputField from "../../common/InputField";
 import Validation from "../../../utils/validateProduct";
-// import "./styles.css";
 
 function AddForm({ closeForm }) {
   const validation = new Validation();
@@ -101,7 +100,7 @@ function AddForm({ closeForm }) {
 
   return (
     <form
-      className="px-10 py-4 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700"
+      className="px-10 py-4 flex flex-col justify-self-center place-items-center border-[1px] rounded-3xl bg-gray-700 z-20"
       onSubmit={(e) => handleSubmit(e)}
     >
       <InputField

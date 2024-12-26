@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { useProduct } from "../../../context/dataContext";
 import Validation from "../../../utils/validateProduct";
 import InputField from "../../common/InputField";
-// import "./styles.css";
 
 function EditForm({ closeForm, productProp }) {
     const validation = new Validation();

@@ -22,7 +22,7 @@ function ProductView() {
         <>
             <button
                 className="w-20 h-8 mt-5 ml-5 rounded-lg bg-stone-200 text-stone-600 font-bold hover:bg-stone-300"
-                onClick={() => navigate("/admin")}
+                onClick={() => navigate(-1)}
             >
                 <div className="flex">
                     <BackIcon />

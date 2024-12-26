@@ -17,7 +17,9 @@ function NavLayout({ children }) {
     return (
         <div className="flex flex-col gap-2 justify-start">
 
-            <nav className="flex item-center justify-between p-4 border-b sticky">
+            {/* <nav className="flex item-center justify-between p-4 border-b"> */}
+            <nav className="fixed w-full z-10 bg-white flex item-center justify-between p-4 border-b">
+                {/* position: fixed; display: flex; justify-content: space-around; */}
 
                 <div>
                     <button
@@ -77,7 +79,7 @@ function NavLayout({ children }) {
 
             </nav>
 
-            <main>{children}</main>
+            <main className="mt-[78px] pt-4 pb-[78px] bg-gray-100">{children}</main>
 
             <ToastContainer
                 position="top-center"

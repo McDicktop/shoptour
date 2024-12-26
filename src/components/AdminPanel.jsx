@@ -67,13 +67,13 @@ function AdminPanel() {
                     id="filter_id"
                     className="w-24 border rounded-2xl h-8 p-1 cursor-pointer"
                 >
-                    <option value="none">Unsort</option>
-                    <option value="price_up">Price ⬆️</option>
-                    <option value="price_down">Price ⬇️</option>
+                    <option value="none">unsort</option>
+                    <option value="price_up">price ⬆️</option>
+                    <option value="price_down">price ⬇️</option>
                 </select>
 
                 <select
-                    onChange={(e) => setCategory(e.target.value === "all" ? null : e.target.value) }
+                    onChange={(e) => setCategory(e.target.value === "all" ? null : e.target.value)}
                     name="cat"
                     id="cat_id"
                     className="w-24 border rounded-2xl h-8 p-1 cursor-pointer"
@@ -90,7 +90,7 @@ function AdminPanel() {
 
                 <button
                     className="w-24 h-8 p-1 flex justify-center rounded-2xl bg-gray-300 font-semibold hover:bg-gray-400"
-                    onClick={ () => setFieldsSelectVisiility(!fieldsSelectVisiility) }
+                    onClick={() => setFieldsSelectVisiility(!fieldsSelectVisiility)}
                 >
                     <ViewIcon />View
                 </button>
@@ -108,6 +108,7 @@ function AdminPanel() {
                 onClose={popupCloseHandler}
                 show={addVisibility}
                 title="Add product"
+
             >
                 {isSuccess === null ? (
                     <AddForm closeForm={popupCloseHandler} />
