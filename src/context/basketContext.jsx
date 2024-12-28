@@ -8,35 +8,64 @@ export const BasketProvider = ({ children }) => {
         try {
             return JSON.parse(localStorage.getItem("basket")) ?? [];
         } catch (err) {
-            return []
+            return [];
         }
     });
 
-
     useEffect(() => {
-        localStorage.setItem("basket", JSON.stringify(basket));
+        const isValidBasket = basket.every(el => el._id && typeof el.amount === 'number');
+        if(isValidBasket) {
+            localStorage.setItem("basket", JSON.stringify(basket))
+        } else {
+            console.error('Invalid basket data: ' , basket)
+        }
     }, [basket]);
 
-
     const updateBasket = (id, delta) => {
-        setBasket((basket) => {
-            const item = basket.find((el) => el._id === id);
-            if (item) {
-                item.amount = Math.min(10, Math.max(1, item.amount + delta));
-                return [...basket];
+        setBasket((prev) => {
+            const updatedBasket = prev.map((el) => {
+                if (el._id === id) {
+                    return {
+                        ...el,
+                        amount: Math.min(10, Math.max(1, el.amount + delta)),
+                    };
+                }
+
+                return el;
+            });
+
+            if (!prev.some((el) => el._id === id) && delta > 0) {
+                return [...updatedBasket, { _id: id, amount: 1, status: true }];
             }
-            return delta > 0 ? [...basket, { _id: id, amount: 1 }] : basket;
-        })
-    }
+
+            return updatedBasket;
+        });
+    };
+
+    const updateStatusById = (e, id) => {
+        setBasket((prev) =>
+            prev.map((el) =>
+                el._id === id ? { ...el, status: e.target.checked } : el
+            )
+        );
+    };
 
     const basketValue = {
         basket,
         addBasketProduct: (id) => updateBasket(id, 1),
-        removeBasketProduct: (id) => setBasket((basket) => basket.filter(el => el._id !== id)),
+        removeBasketProduct: (id) =>
+            setBasket((prev) => prev.filter((el) => el._id !== id)),
         increaseProductAmount: (id) => updateBasket(id, 1),
         decreaseProductAmount: (id) => updateBasket(id, -1),
         clearBasket: () => setBasket([]),
-        basketIncludes: (id) => basket.some(el => el._id === id)
+        basketIncludes: (id) => basket.some((el) => el._id === id),
+        getStatusById: (id) => {
+            const item = basket.find((el) => el._id === id);
+            return item?.status ?? false;
+        },
+        updateStatusById,
+        updateAllStatusesByTarget: (target) =>
+            setBasket((prev) => prev.map((el) => ({ ...el, status: target }))),
     };
 
     return (

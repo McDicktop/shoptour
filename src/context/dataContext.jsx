@@ -84,7 +84,9 @@ export const DataProvider = ({ children }) => {
         }
     }
 
-    const getProduct = (id) => data.find(el => el._id === id)
+    const getProduct = (id) => {
+        return data.find(el => el._id === id);
+    }
 
     const contextValue = {
         data,
