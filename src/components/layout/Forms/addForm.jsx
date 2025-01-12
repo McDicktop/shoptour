@@ -100,11 +100,11 @@ function AddForm({ closeForm }) {
 
   return (
     <form
-      className="px-10 py-4 flex flex-col justify-self-center place-items-center border-[1px] rounded-3xl bg-gray-700 z-20"
+      className="px-10 py-8 flex flex-col justify-self-center place-items-center border-[1px] rounded-3xl bg-white"
       onSubmit={(e) => handleSubmit(e)}
     >
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Code"}
         placeholder="Enter product code"
         id="code_add"
@@ -113,7 +113,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Title"}
         placeholder="Enter product title"
         id="title_add"
@@ -122,7 +122,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Type"}
         placeholder="Enter product type"
         id="type_add"
@@ -131,7 +131,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Description"}
         placeholder="Enter product description"
         id="description_add"
@@ -140,7 +140,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Price"}
         placeholder="Enter product price"
         id="price_add"
@@ -149,7 +149,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Rating"}
         placeholder="Enter product rating"
         id="rating_add"
@@ -158,7 +158,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Quantity"}
         placeholder="Enter product quantity"
         id="quantity_add"
@@ -167,7 +167,7 @@ function AddForm({ closeForm }) {
       />
 
       <InputField
-        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+        className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
         label={"Sale"}
         placeholder="Enter product sale"
         id="sale_add"
@@ -178,7 +178,7 @@ function AddForm({ closeForm }) {
       <div>
         <label
           htmlFor="photo_input_field"
-          className={`border-[1px] rounded-2xl py-1 w-64 mx-auto block mt-4  text-center  text-slate-200 ${photos.length >= 4 ? 'opacity-25' : 'cursor-pointer hover:bg-sky-800'}`}
+          className={`rounded-full py-1 w-64 mx-auto block mt-4 text-center text-slate-200 bg-sky-700 ${photos.length >= 4 ? 'opacity-25' : 'cursor-pointer hover:bg-sky-800'}`}
         >
           Добавить фото
         </label>
@@ -189,10 +189,7 @@ function AddForm({ closeForm }) {
           multiple
           onChange={handlePhotoChange}
           disabled={photos.length >= 4}
-          style={{
-            visibility: "hidden",
-            pointerEvents: "none"
-          }}
+          className="invisible pointer-events-none"
         />
       </div>
 
@@ -202,32 +199,14 @@ function AddForm({ closeForm }) {
             <img
               src={photo.preview}
               alt={`Photo ${index + 1}`}
-              style={{
-                width: "60px",
-                height: "60px",
-                objectFit: "cover",
-                borderRadius: "25%",
-                border: "1px solid white"
-              }}
+              className="w-[60px] h-[60px] object-cover rounded-xl"
             />
             <button
               type="button"
               onClick={() => handlePhotoRemove(index)}
-              style={{
-                position: "absolute",
-                top: "5px",
-                right: "5px",
-                backgroundColor: "red",
-                width: "1.2rem",
-                height: "1.2rem",
-                color: "white",
-                borderRadius: "50%",
-                border: "none",
-                cursor: "pointer",
-                fontSize: ".8rem",
-              }}
+              className="absolute top-[4px] right-[4px] bg-red-600 w-5 h-5 text-white rounded-full cursor-pointer text-xs pb-[2px]"
             >
-              X
+              x
             </button>
           </div>
         ))}
@@ -237,7 +216,7 @@ function AddForm({ closeForm }) {
 
       <button
         type="submit"
-        className={`border-[1px] rounded-2xl w-64 mx-auto block mt-4 py-1 cursor-pointer ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`}
+        className={`block mx-auto mt-4 py-1 w-64 rounded-full bg-sky-700 text-slate-200 ${!isFilled() ? 'opacity-50  cursor-default' : 'font-bold hover:bg-sky-800 cursor-pointer'}`}
         disabled={!isFilled()}
       >Submit
       </button>

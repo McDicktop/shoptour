@@ -23,7 +23,7 @@ import show from "./assets/imgs/show.png";
 function SignupForm() {
     const navigate = useNavigate();
 
-    const levelColor = ["red", "blue", "green"];
+    const levelColor = ["red", "rgb(14 165 233)", "rgb(3 105 161)"];
 
     const validation = new UserValidation();
 
@@ -105,11 +105,11 @@ function SignupForm() {
     }
 
     return (
-        <form className="px-10 mt-20 py-8 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700">
+        <form className="px-10 mt-20 py-8 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-white">
             <div className="relative mb-4">
                 <InputField
                     className={
-                        "w-64 mb-1 px-4 py-1 border-[1px] rounded-xl bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                        "w-64 mb-1 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
                     }
                     id={"username_signup"}
                     value={user.username}
@@ -131,7 +131,7 @@ function SignupForm() {
                     }}
                 />
                 <div
-                    className={`h-4 text-xs ${fieldsStatus.username === "Correct"
+                    className={`h-4 text-xs text-slate-500 ${fieldsStatus.username === "Correct"
                         ? "text-slate-200"
                         : "text-red-400"
                         }`}
@@ -143,7 +143,7 @@ function SignupForm() {
             <div className="relative mb-4">
                 <InputField
                     className={
-                        "w-64 mb-1 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                        "w-64 mb-1 px-4 py-1 border-[1px] rounded-full  bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
                     }
                     id={"email_signup"}
                     value={user.email}
@@ -165,7 +165,7 @@ function SignupForm() {
                     }}
                 />
                 <div
-                    className={`h-4 text-xs ${fieldsStatus.email === "Correct"
+                    className={`h-4 text-xs text-slate-500 ${fieldsStatus.email === "Correct"
                         ? "text-slate-200"
                         : "text-red-400"
                         }`}
@@ -177,7 +177,7 @@ function SignupForm() {
             <div className="relative">
                 <InputField
                     className={
-                        "w-64 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                        "w-64 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
                     }
                     id={"password_signup"}
                     value={user.password}
@@ -186,10 +186,12 @@ function SignupForm() {
                     type={isPassShow ? "text" : "password"}
                 />
 
+                <div className="w-60  text-xs text-slate-500 text-justify justify-self-center">The password must be at least 6 characters long and contain uppercase and lowercase letters and a number.</div>
+
                 <div
-                    className="w-6 h-6 bg-cover bg-no-repeat  absolute top-[30px] right-[12px] invert-[.90]"
+                    className="w-6 h-6 bg-cover bg-no-repeat  absolute top-[30px] right-[12px] "
                     style={{
-                        backgroundImage: `url(${isPassShow ? show : hide})`,
+                        backgroundImage: `url(${isPassShow ? show : hide})`
                     }}
                     onClick={() => setIsPassShow((prev) => !prev)}
                 ></div>
@@ -207,14 +209,14 @@ function SignupForm() {
             <button
                 onClick={(e) => submitHandler(e)}
                 type="submit"
-                className={`border-[1px] w-64 rounded-2xl px-3 py-1 mt-10 ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`}
+                className={`border-[1px] w-64 rounded-2xl px-3 py-1 mt-10 bg-sky-700 ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`}
                 disabled={!isFilled()}
             >
                 Sign up
             </button>
 
             <button
-                className="w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-800"
+                className="w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 bg-sky-700 hover:bg-sky-800"
                 onClick={handleFormNavigateSignIn}
             >
                 Already have an account?

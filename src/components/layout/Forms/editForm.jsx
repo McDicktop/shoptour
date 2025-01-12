@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { useProduct } from "../../../context/dataContext";
 import Validation from "../../../utils/validateProduct";
 import InputField from "../../common/InputField";
+import LoaderComponent from "../LoaderComponent";
 
 function EditForm({ closeForm, productProp }) {
     const validation = new Validation();
@@ -99,38 +100,37 @@ function EditForm({ closeForm, productProp }) {
     };
 
     return (
-        <>
-            <form className="px-10 py-4 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700" onSubmit={handleSubmit}>
-                {product ? (
-                    Object.entries(product).map(([key, val], index) => {
-                        return (
-                            <div key={`ind_${index}`}>
-                                <InputField
-                                    label={`${key[0].toLocaleUpperCase() +
-                                        key.slice(1)
-                                        }`}
-                                    className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
-                                    id={`${key}_sighup`}
-                                    value={
-                                        key !== "sale" ? val : val.value
-                                    }
-                                    onChange={(value) =>
-                                        handleInputChange(key, value)
-                                    }
-                                />
-                            </div>
-                        );
-                    })
-                ) : (
-                    <h1>Loading ...</h1>
-                )}
+        <form className="px-10 py-8 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-white" onSubmit={handleSubmit}>
+            {product ? (
+                Object.entries(product).map(([key, val], index) => {
+                    return (
+                        <div key={`ind_${index}`}>
+                            <InputField
+                                label={`${key[0].toLocaleUpperCase() +
+                                    key.slice(1)
+                                    }`}
+                                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                                id={`${key}_sighup`}
+                                value={
+                                    key !== "sale" ? val : val.value
+                                }
+                                onChange={(value) =>
+                                    handleInputChange(key, value)
+                                }
+                            />
+                        </div>
+                    );
+                })
+            ) : (
+                // <h1>Loading ...</h1>
+                <LoaderComponent />
+            )}
 
-                <button
-                    type="submit"
-                    className={"border-[1px] rounded-2xl w-64 mx-auto block mt-4 mb-4 py-1 cursor-pointer font-bold text-slate-200 hover:bg-sky-800"}
-                >Submit</button>
-            </form>
-        </>
+            <button
+                type="submit"
+                className="block mx-auto mt-4 py-1 w-64 rounded-full bg-sky-700 text-slate-200 font-bold hover:bg-sky-800"
+            >Submit</button>
+        </form>
     );
 }
 

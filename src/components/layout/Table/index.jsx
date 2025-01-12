@@ -187,7 +187,7 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                 title="Delete product?"
             >
                 <button
-                    className="border-[1px] rounded-2xl w-24 py-1 mr-4 cursor-pointer font-bold text-slate-200 hover:bg-sky-800"
+                    className="rounded-full w-24 py-1 mr-4 cursor-pointer font-bold text-slate-200 bg-red-500 hover:bg-red-600"
                     onClick={async () => {
                         const { message } = await deleteProduct(idToDelete);
                         setIdToDelete(null);
@@ -198,7 +198,7 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                     Ok
                 </button>
                 <button
-                    className="border-[1px] rounded-2xl w-24 py-1 cursor-pointer font-bold text-slate-200 hover:bg-sky-800"
+                    className="rounded-full w-24 py-1 cursor-pointer font-bold text-slate-200 bg-sky-700 hover:bg-sky-800"
                     onClick={() => setWarningVisibility(false)}
                 >
                     Cancel

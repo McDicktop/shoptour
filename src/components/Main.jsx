@@ -2,10 +2,22 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getProducts } from "../api/product.api";
 import { useBasket } from "../context/basketContext";
+import { useFilter } from "../context/filterContext";
 import Pagination from "./common/Pagination";
 
 function Main() {
-    const totalPages = 6;
+    
+    const amount = 6;
+
+    const {
+        page,
+        totalPages,
+        changePage,
+        changeTotalPages,
+        filter,
+        setFieldsVisibility,
+    } = useFilter();    
+
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const { basketIncludes, addBasketProduct, removeBasketProduct } = useBasket();
@@ -16,16 +28,18 @@ function Main() {
             const data = await getProducts();
             if (data) {
                 setProducts(data);
+                changeTotalPages(Math.ceil(data.length / amount));
             }
         };
         fetchData();
-    }, []);
+    }, [changeTotalPages]);
 
     return (
         <div className="min-h-screen">
             {products.length > 0 && (
                 <div className="grid grid-cols-3 gap-10 min-w-[960px] justify-self-center mt-10">
-                    {products.map((el, ind) => (
+                    {/* {products.map((el, ind) => ( */}
+                    {products.slice(amount * (page - 1), amount * page).map((el, ind) => ( 
                         <div key={`ind_${ind}`} className="rounded-xl w-72 h-[420px] flex flex-col bg-white shadow-md">
 
                             <div

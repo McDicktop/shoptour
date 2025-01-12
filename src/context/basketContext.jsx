@@ -13,11 +13,13 @@ export const BasketProvider = ({ children }) => {
     });
 
     useEffect(() => {
-        const isValidBasket = basket.every(el => el._id && typeof el.amount === 'number');
-        if(isValidBasket) {
-            localStorage.setItem("basket", JSON.stringify(basket))
+        const isValidBasket = basket.every(
+            (el) => el._id && typeof el.amount === "number"
+        );
+        if (isValidBasket) {
+            localStorage.setItem("basket", JSON.stringify(basket));
         } else {
-            console.error('Invalid basket data: ' , basket)
+            console.error("Invalid basket data: ", basket);
         }
     }, [basket]);
 
@@ -50,6 +52,21 @@ export const BasketProvider = ({ children }) => {
         );
     };
 
+    const deleteSelectedProducts = () => {
+        Array.from(
+            document.querySelectorAll("input[name='item_active']:checked")
+        )
+            .map((el) => el.id)
+            .forEach((id) => {
+                setBasket((prev) => prev.filter((el) => el._id !== id));
+            });
+    };
+
+    const getAmountById = (id) => {
+        return basket.find((el) => el._id === id)?.amount;
+    }
+
+
     const basketValue = {
         basket,
         addBasketProduct: (id) => updateBasket(id, 1),
@@ -66,6 +83,8 @@ export const BasketProvider = ({ children }) => {
         updateStatusById,
         updateAllStatusesByTarget: (target) =>
             setBasket((prev) => prev.map((el) => ({ ...el, status: target }))),
+        deleteSelectedProducts,
+        getAmountById
     };
 
     return (

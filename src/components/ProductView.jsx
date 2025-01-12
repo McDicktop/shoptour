@@ -12,6 +12,7 @@ function ProductView() {
 
     useEffect(() => {
         const getProduct = async () => {
+            console.log(id)
             const product = await getProductById(id);
             setProduct(product);
         };
@@ -33,6 +34,7 @@ function ProductView() {
             {product && (
                 <div className="w-full h-fit flex gap-5 justify-center items-start p-5">
                     {/* Image */}
+                    {console.log(product)}
                     <div
                         className="w-96 h-96 border-[1px] border-gray-800 rounded-xl bg-cover bg-center"
                         style={{ backgroundImage: `url(${product.images[0]})` }}

@@ -13,7 +13,7 @@
 .popup {
   margin: 20px auto;
   padding: 20px;
-  background: #2d3142;
+  background: #d3d3d3;
   border-radius: 20px;
   width: 500px;
   position: relative;
@@ -21,21 +21,21 @@
 }
 
 .popup h2 {
-  margin-top: 0;
-  color: #bdbdbd;
+  color: #505050;
   font-family: Tahoma, Arial, sans-serif;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin: 0 10px 20px;
 }
 
 .popup .close {
   position: absolute;
-  top: 20px;
+  top: 8px;
   right: 30px;
   transition: all 200ms;
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
-  color: #bbb6b6;
+  color: #505050;
 }
 
 .popup .close:hover {

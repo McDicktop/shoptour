@@ -9,7 +9,7 @@ function CheckField({ name, status }) {
         >
             <label
                 htmlFor={`${name}`}
-                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px] cursor-pointer"
+                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700"
             >{`${name}`}</label>
             <input
                 id={`${name}`}
@@ -31,10 +31,10 @@ function FieldsSelectForm({ closeForm }) {
     const fields = ['code', 'title', 'type', 'description', 'price', 'rating', 'quantity', 'sale'];
 
     return (
-        <form className="px-10 py-4 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700">
+        <form className="px-10 py-8 flex flex-col justify-self-center place-items-center border-[1px] rounded-3xl bg-white">
             <button
                 type="button"
-                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 hover:bg-sky-600"
+                className="w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-sky-700 hover:bg-sky-800 text-slate-200"
                 onClick={() => {
                     const activeField = Array.from(
                         document.querySelectorAll('[name="group"]')
@@ -56,7 +56,7 @@ function FieldsSelectForm({ closeForm }) {
 
             <button
                 type="button"
-                className="w-64 mb-10 px-4 py-1 border-[1px] rounded-2xl bg-gray-500 text-slate-200 hover:bg-sky-600"
+                className="w-64 mb-10 px-4 py-1 border-[1px] rounded-full bg-sky-700 hover:bg-sky-800 text-slate-200"
                 onClick={() => {
                     setFieldsVisibility(fields.map((name) => ({ name, isVisible: true })));
                     closeForm();

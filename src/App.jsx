@@ -6,17 +6,17 @@ import Main from "./components/Main";
 import Basket from "./components/Basket";
 import LoaderComponent from "./components/layout/LoaderComponent";
 
-import { ToastContainer, Bounce } from "react-toastify";
+// import { ToastContainer, Bounce } from "react-toastify";
 
 import { useUser } from "./context/userContext";
 
 import ProductView from "./components/ProductView";
 
 import {
-    BrowserRouter as Router,
-    Route,
-    Routes,
-    Navigate,
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
 } from "react-router-dom";
 
 // import "./App.css";
@@ -25,86 +25,83 @@ import "react-toastify/dist/ReactToastify.css";
 import NavLayout from "./components/layout/NavLayout";
 
 function PrivateRoute({ isAuthenticated, isAdmin, children }) {
-    // ИЗМЕНИЛ PRIVATE ROUTE
-    if (!isAuthenticated) return <Navigate to={"/signin"} />;
-    if (children === <Account />) return children;
-    if (!isAdmin) return <Account />;
-    return children;
+  // ИЗМЕНИЛ PRIVATE ROUTE
+  if (!isAuthenticated) return <Navigate to={"/signin"} />;
+  if (children === <Account />) return children;
+  if (!isAdmin) return <Account />;
+  return children;
 }
 
 function App() {
-    const { isAuthenticated, isAdmin, loading } = useUser();
+  const { isAuthenticated, isAdmin, loading } = useUser();
 
-    if (loading) {
-        return <LoaderComponent />;
-    }
+  if (loading) {
+    return <LoaderComponent />;
+  }
 
-    return (
-        <Router>
-            <div className="App">
-                <NavLayout>
-                    <Routes>
-                        <Route
-                            path="/"
-                            element={<Main isAuthenticated={isAuthenticated} />}
-                        />
-                        <Route
-                            path="/signup"
-                            element={
-                                !isAuthenticated ? (
-                                    <SignupForm />
-                                ) : (
-                                    <Navigate to={"/account"} />
-                                )
-                            }
-                        />
-                        <Route
-                            path="/signin"
-                            element={
-                                !isAuthenticated ? (
-                                    <SigninForm />
-                                ) : (
-                                    <Navigate to={"/account"} />
-                                )
-                            }
-                        />
+  return (   
+      <Router>
+        <div className="App">
+          <NavLayout>
+            <Routes>
+              <Route
+                path="/"
+                element={<Main isAuthenticated={isAuthenticated} />}
+              />
+              <Route
+                path="/signup"
+                element={
+                  !isAuthenticated ? (
+                    <SignupForm />
+                  ) : (
+                    <Navigate to={"/account"} />
+                  )
+                }
+              />
+              <Route
+                path="/signin"
+                element={
+                  !isAuthenticated ? (
+                    <SigninForm />
+                  ) : (
+                    <Navigate to={"/account"} />
+                  )
+                }
+              />
 
-                        {/* Защещенный маршрут для авторизованных пользователей */}
+              {/* Защещенный маршрут для авторизованных пользователей */}
 
-                        <Route
-                            path="/account"
-                            element={
-                                <PrivateRoute
-                                    isAuthenticated={isAuthenticated}
-                                    isAdmin={isAdmin}
-                                >
-                                    <Account />
-                                </PrivateRoute>
-                            }
-                        />
-                        <Route
-                            path="/admin"
-                            element={
-                                <PrivateRoute
-                                    isAuthenticated={isAuthenticated}
-                                    isAdmin={isAdmin}
-                                >
-                                    <AdminPanel />
-                                </PrivateRoute>
-                            }
-                        />
+              <Route
+                path="/account"
+                element={
+                  <PrivateRoute
+                    isAuthenticated={isAuthenticated}
+                    isAdmin={isAdmin}
+                  >
+                    <Account />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <PrivateRoute
+                    isAuthenticated={isAuthenticated}
+                    isAdmin={isAdmin}
+                  >
+                    <AdminPanel />
+                  </PrivateRoute>
+                }
+              />
 
-                        <Route
-                            path="/basket"
-                            element={<Basket />}
-                        />
+              <Route path="/basket" element={<Basket />} />
 
-                        <Route path="/product/:id" element={<ProductView />} />
-                    </Routes>
-                </NavLayout>
-            </div>
-        </Router>
-    );
+              <Route path="/product/:id" element={<ProductView />} />
+            </Routes>
+          </NavLayout>
+        </div>
+      </Router> 
+  );
 }
 
 export default App;

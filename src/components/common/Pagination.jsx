@@ -1,5 +1,4 @@
 import { useFilter } from "../../context/filterContext";
-import './pagination.css';
 
 function Pagination({ amountPerPage }) {
     const { page, changePage } = useFilter();
@@ -7,8 +6,7 @@ function Pagination({ amountPerPage }) {
         return Array.from({ length: amountPerPage }).map((_, index) => (
             <li
                 key={index}
-                className={`pagination_item ${index === page - 1 ? "active" : ""
-                    }`}
+                className={`bg-gray-200 text-black w-[24px] h-[24px] rounded-md cursor-pointer text-sm font-bold text-center leading-6 hover:opacity-80 ${index === page - 1 ? 'bg-gray-400' : ''}`}
                 onClick={() => changePage(index + 1)}
             >
                 {index + 1}
@@ -18,11 +16,13 @@ function Pagination({ amountPerPage }) {
 
     return (
         <div
-            className="pagination_container"
+            className="w-full h-[60px] fixed bottom-[0px] left-[0px] bg-gray-200 flex justify-center"
             role="navigation"
             aria-label="Pagination"
         >
-            <ul className="pagination_ul">{pages()}</ul>
+            <ul
+                className="w-[400px] h-[40px] bg-white rounded-full flex place-self-center justify-center items-center gap-2"
+            >{pages()}</ul>
         </div>
     );
 }

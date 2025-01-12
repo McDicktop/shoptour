@@ -64,10 +64,10 @@ function SigninForm() {
     }
 
     return (
-        <form className="px-10 mt-20 py-8 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-gray-700">
+        <form className="px-10 mt-20 py-8 flex flex-col justify-self-center place-items-center  border-[1px] rounded-3xl bg-white">
             <InputField
                 className={
-                    "w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                    "w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
                 }
                 label="Username"
                 id={"username_signin"}
@@ -78,7 +78,7 @@ function SigninForm() {
             <div className="relative">
                 <InputField
                     className={
-                        "w-64 mb-3 px-4 py-1 border-[1px] rounded-2xl  bg-gray-500 text-slate-200 focus:outline-none focus:border-sky-500 focus:border-[1px]"
+                        "w-64 mb-3 px-4 py-1 border-[1px] rounded-full bg-gray-300 text-slate-700 focus:outline-none focus:border-sky-500 focus:border-[1px]"
                     }
                     label="Password"
                     id={"password_signin"}
@@ -87,7 +87,7 @@ function SigninForm() {
                     type={isPassShow ? "text" : "password"}
                 />
                 <div
-                    className="w-6 h-6 bg-cover bg-no-repeat  absolute top-[30px] right-[12px] invert-[.90]"
+                    className="w-6 h-6 bg-cover bg-no-repeat  absolute top-[30px] right-[12px]"
                     style={{
                         backgroundImage: `url(${isPassShow ? show : hide})`,
                     }}
@@ -99,7 +99,7 @@ function SigninForm() {
                 onClick={(e) => submitHandler(e)}
                 type="submit"
                 className={
-                    `border-[1px] w-64 rounded-2xl px-3 py-1 mt-10 ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`
+                    `border-[1px] w-64 rounded-2xl px-3 py-1 mt-10 bg-sky-700 ${!isFilled() ? 'opacity-50 text-gray-400 cursor-default' : 'font-bold text-slate-200 hover:bg-sky-800'}`
                 }
                 disabled={!isFilled()}
             >
@@ -108,7 +108,7 @@ function SigninForm() {
 
             <button
                 className={
-                    "w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 hover:bg-sky-800"
+                    "w-64 mt-4 border-[1px] rounded-2xl px-3 py-1 text-slate-200 bg-sky-700 hover:bg-sky-800"
                 }
                 onClick={handleFormNavigateSignUp}
             >
