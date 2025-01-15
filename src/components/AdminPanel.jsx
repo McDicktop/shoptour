@@ -45,7 +45,7 @@ function AdminPanel() {
 
     return (
         <>
-            <div className="flex flex-row gap-4 items-center justify-center">
+            <div className="flex flex-row gap-4 items-center justify-center mt-6">
                 <button
                     onClick={() => setAddVisibility(!addVisibility)}
                     className="w-24 h-8 p-1 flex justify-center rounded-2xl bg-gray-300 font-semibold hover:bg-gray-400"

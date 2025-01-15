@@ -3,7 +3,7 @@ import SigninForm from "./components/Signin";
 import AdminPanel from "./components/AdminPanel";
 import Account from "./components/Account";
 import Main from "./components/Main";
-import Basket from "./components/Basket";
+import BasketPage from "./components/Basket";
 import LoaderComponent from "./components/layout/LoaderComponent";
 
 // import { ToastContainer, Bounce } from "react-toastify";
@@ -39,68 +39,68 @@ function App() {
     return <LoaderComponent />;
   }
 
-  return (   
-      <Router>
-        <div className="App">
-          <NavLayout>
-            <Routes>
-              <Route
-                path="/"
-                element={<Main isAuthenticated={isAuthenticated} />}
-              />
-              <Route
-                path="/signup"
-                element={
-                  !isAuthenticated ? (
-                    <SignupForm />
-                  ) : (
-                    <Navigate to={"/account"} />
-                  )
-                }
-              />
-              <Route
-                path="/signin"
-                element={
-                  !isAuthenticated ? (
-                    <SigninForm />
-                  ) : (
-                    <Navigate to={"/account"} />
-                  )
-                }
-              />
+  return (
+    <Router>
+      <div className="App">
+        <NavLayout>
+          <Routes>
+            <Route
+              path="/"
+              element={<Main isAuthenticated={isAuthenticated} />}
+            />
+            <Route
+              path="/signup"
+              element={
+                !isAuthenticated ? (
+                  <SignupForm />
+                ) : (
+                  <Navigate to={"/account"} />
+                )
+              }
+            />
+            <Route
+              path="/signin"
+              element={
+                !isAuthenticated ? (
+                  <SigninForm />
+                ) : (
+                  <Navigate to={"/account"} />
+                )
+              }
+            />
 
-              {/* Защещенный маршрут для авторизованных пользователей */}
+            {/* Защещенный маршрут для авторизованных пользователей */}
 
-              <Route
-                path="/account"
-                element={
-                  <PrivateRoute
-                    isAuthenticated={isAuthenticated}
-                    isAdmin={isAdmin}
-                  >
-                    <Account />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <PrivateRoute
-                    isAuthenticated={isAuthenticated}
-                    isAdmin={isAdmin}
-                  >
-                    <AdminPanel />
-                  </PrivateRoute>
-                }
-              />
+            <Route
+              path="/account"
+              element={
+                <PrivateRoute
+                  isAuthenticated={isAuthenticated}
+                  isAdmin={isAdmin}
+                >
+                  <Account />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <PrivateRoute
+                  isAuthenticated={isAuthenticated}
+                  isAdmin={isAdmin}
+                >
+                  <AdminPanel />
+                </PrivateRoute>
+              }
+            />
 
-              <Route path="/basket" element={<Basket />} />
+            <Route path="/basket" element={<BasketPage />} />
 
-              <Route path="/product/:id" element={<ProductView />} />
-            </Routes>
-          </NavLayout>
-        </div>
-      </Router> 
+            <Route path="/product/:id" element={<ProductView />} />
+          </Routes>
+        </NavLayout>
+      </div>
+    </Router>
   );
 }
 

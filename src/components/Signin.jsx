@@ -6,7 +6,6 @@ import { useUser } from "../context/userContext";
 import { userLogin } from "../api/user.api";
 import hide from "./assets/imgs/hide.png";
 import show from "./assets/imgs/show.png";
-// import "./styles.css";
 
 function SigninForm() {
     const navigate = useNavigate();
@@ -87,7 +86,7 @@ function SigninForm() {
                     type={isPassShow ? "text" : "password"}
                 />
                 <div
-                    className="w-6 h-6 bg-cover bg-no-repeat  absolute top-[30px] right-[12px]"
+                    className="w-6 h-6 bg-cover bg-no-repeat absolute top-[30px] right-[12px] cursor-pointer"
                     style={{
                         backgroundImage: `url(${isPassShow ? show : hide})`,
                     }}

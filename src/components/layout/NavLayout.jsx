@@ -14,7 +14,7 @@ function NavLayout({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col gap-2 justify-start">
+    <div className="flex flex-col  justify-start">
       <nav className="fixed w-full z-10 bg-white flex item-center justify-between p-4 border-b">
         <div>
           <button onClick={() => navigate("/")}>
@@ -54,7 +54,7 @@ function NavLayout({ children }) {
         </div>
       </nav>
 
-      <main className="mt-[78px] pt-4 pb-[78px] bg-gray-100">{children}</main>
+      <main className="mt-[78px] bg-gray-100 min-h-[calc(100vh-78px)]">{children}</main>
 
       <ToastContainer
         position="top-center"

@@ -1,7 +1,7 @@
 import { useState, useImperativeHandle, forwardRef } from "react";
 import { YMaps, Map, Placemark } from "@pbe/react-yandex-maps";
 
-const UserOrderAdress = forwardRef((_, ref) => {
+const DeliveryAddress = forwardRef((_, ref) => {
   const defaultState = {
     center: [55.751574, 37.573856],
     zoom: 5,
@@ -31,7 +31,7 @@ const UserOrderAdress = forwardRef((_, ref) => {
   }));
 
   return (
-    <div className="border rounded-xl shadow-md p-4 mt-4">
+    <div className="border rounded-xl shadow-md p-4 mt-2">
       <YMaps>
         <Map defaultState={defaultState} width={286} height={200}>
           <Placemark geometry={[55.684758, 37.738521]} />
@@ -82,6 +82,6 @@ const UserOrderAdress = forwardRef((_, ref) => {
   );
 });
 
-UserOrderAdress.displayName = "UserOrderAdress";
+DeliveryAddress.displayName = "DeliveryAddress";
 
-export default UserOrderAdress;
+export default DeliveryAddress;
