@@ -14,25 +14,26 @@ function NavLayout({ children }) {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col  justify-start">
+    <div className="flex flex-col justify-start">
       <nav className="fixed w-full z-10 bg-white flex item-center justify-between p-4 border-b">
         <div>
-          <button onClick={() => navigate("/")}>
+          <button className='hover:opacity-50' onClick={() => navigate("/")}>
             <HomeIcon width={40} height={40} />
           </button>
         </div>
 
         <div>
-          <button onClick={() => navigate("/basket")} className="mr-4">
+          <button className='hover:opacity-50 mr-4' onClick={() => navigate("/basket")}>
             <BasketIcon width={40} height={40} />
           </button>
 
           {localStorage.getItem("token") ? (
             <>
-              <button onClick={() => navigate("/account")} className="mr-4">
+              <button className='hover:opacity-50 mr-4' onClick={() => navigate("/account")}>
                 <AccountIcon width={40} height={40} />
               </button>
               <button
+                className='hover:opacity-50'
                 onClick={() => {
                   handleLogout();
                   navigate("/");

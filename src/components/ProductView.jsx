@@ -12,7 +12,6 @@ function ProductView() {
 
     useEffect(() => {
         const getProduct = async () => {
-            console.log(id)
             const product = await getProductById(id);
             setProduct(product);
         };
@@ -22,27 +21,26 @@ function ProductView() {
     return (
         <>
             <button
-                className="w-20 h-8 mt-5 ml-5 rounded-lg bg-stone-200 text-stone-600 font-bold hover:bg-stone-300"
+                className="w-20 h-10 mt-5 ml-5 p-1 rounded-full text-slate-200 font-bold bg-green-500 hover:bg-green-600"
                 onClick={() => navigate(-1)}
             >
                 <div className="flex">
-                    <BackIcon />
+                    <BackIcon color={'white'} />
                     Back
                 </div>
             </button>
 
             {product && (
-                <div className="w-full h-fit flex gap-5 justify-center items-start p-5">
+                <div className="w-[840px] h-fit mx-auto flex gap-5 justify-center items-start p-5 shadow rounded-2xl">
                     {/* Image */}
-                    {console.log(product)}
                     <div
-                        className="w-96 h-96 border-[1px] border-gray-800 rounded-xl bg-cover bg-center"
+                        className="w-96 h-96 shadow rounded-xl bg-cover bg-center"
                         style={{ backgroundImage: `url(${product.images[0]})` }}
                     />
 
                     {/* Content */}
-                    <div className="flex w-96 flex-col gap-2 border-[1px] border-gray-800 rounded-xl p-5">
-                        <h1 className="text-3xl font-bold">{product.title}</h1>
+                    <div className="flex w-96 flex-col gap-2 shadow rounded-2xl p-5">
+                        <h1 className="text-2xl font-semibold">{product.title}</h1>
                         <h2 className="text-2xl font-bold">
                             {"$" + product.price}
                         </h2>
@@ -51,7 +49,7 @@ function ProductView() {
                         </article>
 
                         <button
-                            className="w-24 h-10 p-1 border-black border-[1px] rounded-2xl bg-gray-300 font-bold hover:bg-gray-400"
+                            className="w-24 h-10 p-1 rounded-full bg-green-500 font-bold text-slate-200 hover:bg-green-600"
                             onClick={() => {
                                 if (!basketIncludes(product._id)) {
                                     addBasketProduct(product._id);

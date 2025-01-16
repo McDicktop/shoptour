@@ -1,14 +1,14 @@
-import React from 'react'
 import { useBasket } from '../../../context/basketContext';
 import { useProduct } from '../../../context/dataContext';
 import { useNavigate } from 'react-router-dom';
+import Prices from './Prices';
 
 
-function BasketItem({ basketItem, children }) {
+function BasketItem({ value }) {
     const navigate = useNavigate();
     const { getStatusById, updateStatusById, increaseProductAmount, decreaseProductAmount } = useBasket();
     const { getProduct } = useProduct();
-    const product = getProduct(basketItem._id);
+    const product = getProduct(value._id);
 
     return (
         <div
@@ -57,7 +57,7 @@ function BasketItem({ basketItem, children }) {
                 -
             </button>
             <span className="text-lg font-medium w-10 mx-2 rounded-xl border-[2px] text-center">
-                {basketItem.amount}
+                {value.amount}
             </span>
             <button
                 onClick={() =>
@@ -69,7 +69,7 @@ function BasketItem({ basketItem, children }) {
                 +
             </button>
 
-            {children}
+            <Prices order={value}/>
 
         </div>
     )

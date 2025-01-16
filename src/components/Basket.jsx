@@ -1,15 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-
 import { useBasket } from "../context/basketContext";
 import { useProduct } from "../context/dataContext";
-
 import { Basket } from "./common/Basket";
 import LoaderComponent from "./layout/LoaderComponent";
-
 import { ALL_PROMOS } from "../constants";
 
 function BasketPage() {
-
     const { basket } = useBasket();
     const { data } = useProduct();
 
@@ -20,13 +16,15 @@ function BasketPage() {
     const [promo, setPromo] = useState(0);
 
     const handlePromo = (value) => {
-        const promoIndex = ALL_PROMOS.map((el) => el.value).findIndex((item) => item === value);
+        const promoIndex = ALL_PROMOS.map((el) => el.value).findIndex(
+            (item) => item === value
+        );
         if (promoIndex > -1) {
             setPromo((prev) => ALL_PROMOS[promoIndex].scale);
             return;
         }
         setPromo((prev) => 0);
-    }
+    };
 
     function getDeliveryType() {
         return deliveryTypeRef.current.getDeliveryType();
@@ -35,7 +33,6 @@ function BasketPage() {
     function getAddress() {
         return addressRef.current.getAddress();
     }
-
 
     useEffect(() => {
         setTimeout(() => {
@@ -51,17 +48,28 @@ function BasketPage() {
         <>
             {basket.length ? (
                 <div className="flex place-self-center gap-4 mt-6 max-h-[calc(100vh-120px)] overflow-hidden border rounded-xl shadow-md p-1">
-
                     <div className="p-4 overflow-y-auto ">
                         <Basket.HandleBasketItems />
-                        {basket.map((el, index) => <Basket.BasketItem key={`ind_${index}`} basketItem={el} children={<Basket.Prices order={el} />} />)}
+                        {basket.map((el, index) => (
+                            <Basket.BasketItem
+                                key={`basket_element_${index}`}
+                                value={el}
+                            />
+                        ))}
                     </div>
 
                     <div className="w-80">
                         <Basket.DeliveryType ref={deliveryTypeRef} />
                         <Basket.DeliveryAddress ref={addressRef} />
-                        <Basket.Promo promoValue={promo} handlePromo={handlePromo} />
-                        <Basket.OrderComponent promoValue={promo} delivery={getDeliveryType} address={getAddress} />
+                        <Basket.Promo
+                            promoValue={promo}
+                            handlePromo={handlePromo}
+                        />
+                        <Basket.OrderComponent
+                            promoValue={promo}
+                            delivery={getDeliveryType}
+                            address={getAddress}
+                        />
                     </div>
                 </div>
             ) : (

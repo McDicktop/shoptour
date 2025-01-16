@@ -12,9 +12,7 @@ const DataContext = createContext();
 export const DataProvider = ({ children }) => {
 
     const [data, setData] = useState([]);
-
     const [categories, setCategories] = useState([]);   // ДОБАВИЛ СОСТОЯНИЕ ДЛЯ КАТЕГОРИЙ ТОВАРОВ
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -32,26 +30,21 @@ export const DataProvider = ({ children }) => {
 
     const deleteProduct = async (id) => {
         const res = await removeProduct(id);
-
         if (!res.message) {
             setData((prev) =>
                 prev.filter((el) => el._id !== res._id)
             );
             return { message: "Product was removed!" };
         }
-
         return { message: res.response.data.message }
     };
 
     const addProduct = async (formData) => {
-
         const res = await addProductApi(formData);
-
         if (!res.message) {
             setData((prev) => [...prev, res]);
             return { message: 'Product added!', status: 200 }
         }
-
         switch (res.status) {
             case 400: {
                 return { message: res.response.data.message }
@@ -63,9 +56,7 @@ export const DataProvider = ({ children }) => {
     };
 
     const editProduct = async (editedObj, id) => {
-
         const res = await editProductApi(editedObj, id);
-
         if (!res.message) {
             setData((prev) => prev.map((el) => el._id === id ? res : el));
             return { message: 'Product changed!', status: 200 }

@@ -122,7 +122,6 @@ function EditForm({ closeForm, productProp }) {
                     );
                 })
             ) : (
-                // <h1>Loading ...</h1>
                 <LoaderComponent />
             )}
 

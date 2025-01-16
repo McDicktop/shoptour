@@ -5,7 +5,6 @@ import { useUser } from "../../../context/userContext";
 import { addOrder } from "../../../api/order.api";
 
 function OrderComponent({ promoValue, delivery, address }) {
-
     const { getProduct } = useProduct();
     const { basket, getStatusById, getAmountById } = useBasket();
     const { user } = useUser();
@@ -36,7 +35,6 @@ function OrderComponent({ promoValue, delivery, address }) {
         return !promoValue ? price : price * promoValue;
     };
 
-
     function getOrderItems() {
         const ordersArr = [];
         Array.from(
@@ -55,7 +53,6 @@ function OrderComponent({ promoValue, delivery, address }) {
             });
         return ordersArr;
     }
-
 
     const handleOrder = async () => {
         const { id: _id, name, email } = user;
@@ -76,7 +73,7 @@ function OrderComponent({ promoValue, delivery, address }) {
             toast("Select products to make order");
             return;
         }
- 
+
         const currentDate = new Date();
 
         const orderObj = {
@@ -85,10 +82,15 @@ function OrderComponent({ promoValue, delivery, address }) {
             order: {
                 items: getOrderItems(),
                 discountedPrice: +getTotalPriceWithDiscount()?.toFixed(2),
-                fullPrice: +getTotalPriceWithoutDiscount()?.toFixed(2)
+                fullPrice: +getTotalPriceWithoutDiscount()?.toFixed(2),
             },
             map: ["fghfgh", "dfgdfgd"],
-            delivery: [delivery(), delivery() === 'courier' ? currentDate.setDate(currentDate.getDate() + 1) : currentDate.setDate(currentDate.getDate() + 3)]
+            delivery: [
+                delivery(),
+                delivery() === "courier"
+                    ? currentDate.setDate(currentDate.getDate() + 1)
+                    : currentDate.setDate(currentDate.getDate() + 3),
+            ],
         };
 
         const newOrder = await addOrder(orderObj);
@@ -105,11 +107,12 @@ function OrderComponent({ promoValue, delivery, address }) {
         toast(newOrder.response.data.message);
     };
 
-
     return (
         <div className="border rounded-xl shadow-md px-4 py-2 mt-2">
             <p className="font-semibold text-gray-400">{`Price without discount: ${getTotalPriceWithoutDiscount()}$`}</p>
-            <div className="font-semibold text-lg">{`Order price: ${+getTotalPriceWithDiscount().toFixed(2)}$`}</div>
+            <div className="font-semibold text-lg">{`Order price: ${+getTotalPriceWithDiscount().toFixed(
+                2
+            )}$`}</div>
 
             <button
                 onClick={() => handleOrder()}
@@ -118,7 +121,7 @@ function OrderComponent({ promoValue, delivery, address }) {
                 Order
             </button>
         </div>
-    )
+    );
 }
 
 export default OrderComponent;
