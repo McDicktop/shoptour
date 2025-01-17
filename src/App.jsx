@@ -1,17 +1,3 @@
-import SignupForm from "./components/Signup";
-import SigninForm from "./components/Signin";
-import AdminPanel from "./components/AdminPanel";
-import Account from "./components/Account";
-import Main from "./components/Main";
-import BasketPage from "./components/Basket";
-import LoaderComponent from "./components/layout/LoaderComponent";
-
-// import { ToastContainer, Bounce } from "react-toastify";
-
-import { useUser } from "./context/userContext";
-
-import ProductView from "./components/ProductView";
-
 import {
   BrowserRouter as Router,
   Route,
@@ -19,16 +5,32 @@ import {
   Navigate,
 } from "react-router-dom";
 
-// import "./App.css";
-import "react-toastify/dist/ReactToastify.css";
-
 import NavLayout from "./components/layout/NavLayout";
+import SignupForm from "./components/Signup";
+import SigninForm from "./components/Signin";
+import AdminPanel from "./components/AdminPanel";
+import Account from "./components/Account";
+import Main from "./components/Main";
+import ProductView from "./components/ProductView";
+import BasketPage from "./components/Basket";
+import Payment from "./components/Payment";
+import LoaderComponent from "./components/layout/LoaderComponent";
+
+import { useUser } from "./context/userContext";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function PrivateRoute({ isAuthenticated, isAdmin, children }) {
   // ИЗМЕНИЛ PRIVATE ROUTE
   if (!isAuthenticated) return <Navigate to={"/signin"} />;
-  if (children === <Account />) return children;
-  if (!isAdmin) return <Account />;
+
+  if (children.type.name === 'AdminPanel') {
+    if (!isAdmin) {
+      return <Navigate to={"/"} />
+    }
+    return children;
+  }
+
   return children;
 }
 
@@ -46,7 +48,7 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Main isAuthenticated={isAuthenticated} />}
+              element={<Main />}
             />
             <Route
               path="/signup"
@@ -94,6 +96,18 @@ function App() {
               }
             />
 
+            <Route
+              path="/payment/:id"
+              element={
+                <PrivateRoute
+                  isAuthenticated={isAuthenticated}
+                  isAdmin={isAdmin}
+                >
+                  <Payment />
+                </PrivateRoute>
+              }
+            />
+
             <Route path="/basket" element={<BasketPage />} />
 
             <Route path="/product/:id" element={<ProductView />} />
@@ -105,22 +119,3 @@ function App() {
 }
 
 export default App;
-
-// {
-//     title: json,
-//     type: json,
-//     description: json,
-//     images: [1, 2, 3 url],
-//     price: json,
-//     rating: random(3, 5),
-//     code: 0001,
-//     quantity: random(0, 999),
-//     sale: {
-//         status: true/false,
-//         if status === true -> value: 0.01 - 0.25
-//     },
-//     releaseDate: random Date(),
-
-//     createdAt: date of creating document in mongo,
-//     updatedAt: date of updating document in mongo,
-// }

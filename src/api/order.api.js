@@ -25,10 +25,25 @@ export const getUserOrders = async (userId) => {
                 Authorization: `Bearer ${token}`,
             }
         });
-        console.log(res.data)
         return res.data;
     } catch (e) {
         return e;
     }
 }
+
+export const getOrderById = async (orderId) => {
+    const token = localStorage.getItem('token');
+    try {
+        const res = await axios.get(`${backend_url}order/getone/${orderId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+        return res.data;
+    } catch (e) {
+        return e;
+    }
+}
+
+
 

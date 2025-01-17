@@ -8,3 +8,5 @@ export const ALL_PROMOS = [
         scale: 0.5
     },
 ]
+
+export const MAX_ITEMS_DISPLAY = 6;

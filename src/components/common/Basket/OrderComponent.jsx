@@ -3,10 +3,13 @@ import { useProduct } from "../../../context/dataContext";
 import { useBasket } from "../../../context/basketContext";
 import { useUser } from "../../../context/userContext";
 import { addOrder } from "../../../api/order.api";
+import { useNavigate } from "react-router-dom";
 
 function OrderComponent({ promoValue, delivery, address }) {
+
+    const navigate = useNavigate();
     const { getProduct } = useProduct();
-    const { basket, getStatusById, getAmountById } = useBasket();
+    const { basket, getStatusById, getAmountById, deleteSelectedProducts } = useBasket();
     const { user } = useUser();
 
     const getDiscountedPrice = (sale, price) => {
@@ -96,8 +99,11 @@ function OrderComponent({ promoValue, delivery, address }) {
         const newOrder = await addOrder(orderObj);
 
         if (!newOrder.message) {
+            // console.log(newOrder.data._id)
             toast("Order placed!");
-            console.log(newOrder.data);
+            deleteSelectedProducts();
+            navigate(`/payment/${newOrder.data._id}`);
+            // navigate(`/payment`);
             return;
         }
         if (!newOrder.response.data.message) {
