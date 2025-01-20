@@ -18,9 +18,8 @@ const OrderPics = ({ items }) => {
             {visibleItems.map((item, index) => (
                 <li
                     key={`items_order_${index}`}
-                    className={`border border-gray-600 rounded-full w-10 h-10 bg-cover font-bold text-center leading-9 ${
-                        index !== 0 ? "-ml-3" : ""
-                    }`}
+                    className={`border border-gray-600 rounded-full w-10 h-10 bg-cover font-bold text-center leading-9 ${index !== 0 ? "-ml-3" : ""
+                        }`}
                     style={getBgStyle(
                         index,
                         item.image,
@@ -29,7 +28,7 @@ const OrderPics = ({ items }) => {
                     )}
                 >
                     {index === MAX_ITEMS_DISPLAY - 1 &&
-                    items.length > MAX_ITEMS_DISPLAY
+                        items.length > MAX_ITEMS_DISPLAY
                         ? `+${items.length - MAX_ITEMS_DISPLAY + 1}`
                         : ""}
                 </li>
@@ -39,6 +38,7 @@ const OrderPics = ({ items }) => {
 };
 
 function SingleOrder({ order }) {
+    const { isPayed } = order;
     const { discountedPrice, fullPrice, items } = order.order;
     const { name, email } = order.user;
     const { city, street, house, app } = order.address;
@@ -50,12 +50,14 @@ function SingleOrder({ order }) {
             <div className="absolute flex flex-col items-center right-3 top-20">
                 <p className="font-semibold text-green-600 text-3xl">{`${discountedPrice}$`}</p>
                 <p className="font-semibold text-red-600 text-2xl line-through mb-4">{`${fullPrice}$`}</p>
-                <button
-                    onClick={() => { navigate(`/payment/${order._id}`); }}
+                {isPayed ? <div className="font-bold text-green-600">✔️payed</div> : <button
+                    onClick={() => {
+                        navigate(`/payment/${order._id}`);
+                    }}
                     className="rounded-full border-[1px] px-2 py-1 w-20 bg-green-500 hover:bg-green-600 font-bold text-slate-200"
                 >
                     Pay
-                </button>
+                </button>}
             </div>
 
             <div className="flex justify-between mb-2 font-semibold">

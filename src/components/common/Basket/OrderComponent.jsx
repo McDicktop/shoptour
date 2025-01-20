@@ -99,11 +99,9 @@ function OrderComponent({ promoValue, delivery, address }) {
         const newOrder = await addOrder(orderObj);
 
         if (!newOrder.message) {
-            // console.log(newOrder.data._id)
             toast("Order placed!");
             deleteSelectedProducts();
             navigate(`/payment/${newOrder.data._id}`);
-            // navigate(`/payment`);
             return;
         }
         if (!newOrder.response.data.message) {

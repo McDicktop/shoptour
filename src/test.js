@@ -242,3 +242,28 @@
         "images": ["http://localhost:8080/cache/images/1734976242325bread_c.jpg"]
     },
 ]
+
+
+const date = '5555'
+
+
+const isExpired = (arg) => {
+    if (+arg.slice(0, 2) > 12 || +arg.slice(0, 2) < 1) {
+        return false;
+    }
+
+    if (+arg.slice(2) < +String(new Date().getFullYear()).slice(2)) {
+        return false;
+    }
+
+    // if (+arg.slice(2) === +String(new Date().getFullYear()).slice(2) && +arg.slice(0, 2) > +String(new Date().getMonth()) + 1) {
+    if (+arg.slice(2) === +String(new Date().getFullYear()).slice(2)) {
+        console.log(+arg.slice(0, 2));
+        console.log('NOW - ', +String(new Date().getMonth()) + 1);
+        return false;
+    }
+
+    return true;
+}
+
+console.log(isExpired(date))
