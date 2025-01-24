@@ -100,7 +100,7 @@ function AddForm({ closeForm }) {
 
   return (
     <form
-      className="px-10 py-8 flex flex-col justify-self-center place-items-center border-[1px] rounded-3xl bg-white"
+      className="px-10 py-4 flex flex-col justify-self-center place-items-center  rounded-3xl bg-white"
       onSubmit={(e) => handleSubmit(e)}
     >
       <InputField

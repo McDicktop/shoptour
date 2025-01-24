@@ -1,38 +1,86 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { getProducts } from "../api/product.api";
+
 import { useBasket } from "../context/basketContext";
 import { useFilter } from "../context/filterContext";
+
 import Pagination from "./common/Pagination";
+import { Filters } from "./layout/Filters";
+
+import { AMOUNT_ON_PAGE } from "../constants";
 
 function Main() {
-    const amount = 12;
-
-    const { page, totalPages, changeTotalPages } = useFilter();
-
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
+    const { filter, page, totalPages, changeTotalPages, resetFilter } = useFilter();
     const { basketIncludes, addBasketProduct, removeBasketProduct } =
         useBasket();
 
     useEffect(() => {
+        resetFilter();
+    }, [])
+    
+
+    useEffect(() => {
         const fetchData = async () => {
             const data = await getProducts();
-            if (data) {
-                setProducts(data);
-                changeTotalPages(Math.ceil(data.length / amount));
+            if (data.length) {
+                const filtered = data.reduce((acc, current) => {
+                    if (
+                        !current.title
+                            .toLowerCase()
+                            .includes(filter.search.toLowerCase())
+                    )
+                        return acc;
+                    acc.push(current);
+                    return acc;
+                }, []);
+
+                const result =
+                    filter.category === null
+                        ? filtered
+                        : filtered.filter((el) => el.type === filter.category);
+
+                setProducts((prev) => {
+                    switch (filter.sort) {
+                        case "price_up": {
+                            return [
+                                ...result.sort((a, b) => a.price - b.price),
+                            ];
+                        }
+                        case "price_down": {
+                            return [
+                                ...result.sort((a, b) => b.price - a.price),
+                            ];
+                        }
+                        default: {
+                            return [...result];
+                        }
+                    }
+                });
+                changeTotalPages(Math.ceil(result.length / AMOUNT_ON_PAGE));
             }
         };
         fetchData();
-    }, [changeTotalPages]);
+    }, [filter, changeTotalPages]);
 
     return (
-        // <div className="min-h-screen">
         <div className="max-h-[calc(100vh-156px)] overflow-auto border rounded-xl shadow-md p-1 mt-2 w-[1200px] mx-auto">
+            <div className="flex flex-row gap-4 items-center justify-center mt-8">
+                <Filters.Search />
+                <Filters.Sort />
+                <Filters.CategorySelect />
+            </div>
+
             {products.length > 0 && (
-                <div className="grid grid-cols-3 gap-10 min-w-[960px] justify-self-center mt-10 mb-10">
+                <div className="grid grid-cols-3 gap-10 min-w-[960px] justify-self-center mt-8 mb-8">
                     {products
-                        .slice(amount * (page - 1), amount * page)
+                        .slice(
+                            AMOUNT_ON_PAGE * (page - 1),
+                            AMOUNT_ON_PAGE * page
+                        )
                         .map((el, ind) => (
                             <div
                                 key={`ind_${ind}`}
@@ -54,14 +102,16 @@ function Main() {
                                 </h1>
                                 <div className="mx-4 flex items-center">
                                     {el.sale.status && (
-                                        <span className="font-bold text-2xl">{`${el.price - el.price * el.sale.value
-                                            }$`}</span>
+                                        <span className="font-bold text-2xl">{`${
+                                            el.price - el.price * el.sale.value
+                                        }$`}</span>
                                     )}
                                     <span
-                                        className={`relative  ${el.sale.status
-                                            ? "mx-2 text-lg before:border-b-2 before:border-red-400 before:absolute before:w-full before:h-1/2 before:-rotate-12"
-                                            : "text-2xl font-bold"
-                                            }`}
+                                        className={`relative  ${
+                                            el.sale.status
+                                                ? "mx-2 text-lg before:border-b-2 before:border-red-400 before:absolute before:w-full before:h-1/2 before:-rotate-12"
+                                                : "text-2xl font-bold"
+                                        }`}
                                     >{`${el.price}$`}</span>
                                 </div>
 

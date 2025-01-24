@@ -47,7 +47,7 @@ function BasketPage() {
     return (
         <>
             {basket.length ? (
-                <div className="flex place-self-center gap-4 mt-6 max-h-[calc(100vh-120px)] overflow-hidden border rounded-xl shadow-md p-1">
+                <div className="flex place-self-center gap-4 mt-6 max-h-[calc(100vh-100px)] overflow-hidden border rounded-xl shadow-md p-1">
                     <div className="p-4 overflow-y-auto ">
                         <Basket.HandleBasketItems />
                         {basket.map((el, index) => (

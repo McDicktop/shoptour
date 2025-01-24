@@ -17,7 +17,9 @@ function NavLayout({ children }) {
     <div className="flex flex-col justify-start">
       <nav className="fixed w-full z-10 bg-white flex item-center justify-between p-4 border-b">
         <div>
-          <button className='hover:opacity-50' onClick={() => navigate("/")}>
+          <button className='hover:opacity-50' onClick={() => {
+            navigate("/")
+          }}>
             <HomeIcon width={40} height={40} />
           </button>
         </div>

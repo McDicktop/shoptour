@@ -8,7 +8,7 @@ import {
 import NavLayout from "./components/layout/NavLayout";
 import SignupForm from "./components/Signup";
 import SigninForm from "./components/Signin";
-import AdminPanel from "./components/AdminPanel";
+import AdminPanel from "./components/adminPanel";
 import Account from "./components/Account";
 import Main from "./components/Main";
 import ProductView from "./components/ProductView";
@@ -20,7 +20,10 @@ import { useUser } from "./context/userContext";
 
 import "react-toastify/dist/ReactToastify.css";
 
+
+
 function PrivateRoute({ isAuthenticated, isAdmin, children }) {
+
   // ИЗМЕНИЛ PRIVATE ROUTE
   if (!isAuthenticated) return <Navigate to={"/signin"} />;
 

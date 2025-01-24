@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useFilter } from "../context/filterContext";
 
 import CustomPopup from "./layout/Popup";
-
 import AddForm from "./layout/Forms/addForm";
 import EditForm from "./layout/Forms/editForm";
 import Table from "./layout/Table";
 import FieldsSelectForm from "./layout/Forms/fieldsSelectForm";
-
-import { useProduct } from "../context/dataContext";
-import { useFilter } from "../context/filterContext";
+import { Filters } from "./layout/Filters";
 
 import AddIcon from "./assets/icons/add.icon";
 import ViewIcon from "./assets/icons/view.icon";
 
 function AdminPanel() {
-    const amount = 10;
+    
+    const { resetFilter } = useFilter()
 
-    const { categories } = useProduct();
-    const { filter, setCategory, setSort, setSearch } = useFilter();
+    useEffect(() => {
+        resetFilter();
+    }, []);
 
     const [addVisibility, setAddVisibility] = useState(false);
     const [editVisibility, setEditVisibility] = useState(false);
@@ -29,19 +29,13 @@ function AdminPanel() {
         setAddVisibility(false);
         setEditVisibility(false);
         setFieldsSelectVisiility(false);
-
         setProductEdit(null);
         setIsSuccess(null);
     };
 
-    const handleSubmitForm = (value) => {
-        setIsSuccess(value);
-    };
-
-    const handleOpenEditForm = (element) => {
-        setEditVisibility(true);
-        setProductEdit(element);
-    };
+    // const handleSubmitForm = (value) => {
+    //     setIsSuccess(value);
+    // };
 
     return (
         <>
@@ -52,56 +46,25 @@ function AdminPanel() {
                 >
                     <AddIcon />Add
                 </button>
-
-                <input
-                    type="text"
-                    value={filter.search}
-                    placeholder="type to search..."
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-48 h-8 pl-4 pr-4 border rounded-2xl font-normal"
-                />
-
-                <select
-                    onChange={(e) => setSort(e.target.value)}
-                    name="filter"
-                    id="filter_id"
-                    className="w-24 border rounded-2xl h-8 p-1 cursor-pointer"
-                >
-                    <option value="none">unsort</option>
-                    <option value="price_up">price ⬆️</option>
-                    <option value="price_down">price ⬇️</option>
-                </select>
-
-                <select
-                    onChange={(e) => setCategory(e.target.value === "all" ? null : e.target.value)}
-                    name="cat"
-                    id="cat_id"
-                    className="w-24 border rounded-2xl h-8 p-1 cursor-pointer"
-                >
-                    {categories &&
-                        categories.map((category, ind) => {
-                            return (
-                                <option key={`cat_${ind}`} value={category}>
-                                    {category}
-                                </option>
-                            );
-                        })}
-                </select>
-
                 <button
                     className="w-24 h-8 p-1 flex justify-center rounded-2xl bg-gray-300 font-semibold hover:bg-gray-400"
                     onClick={() => setFieldsSelectVisiility(!fieldsSelectVisiility)}
                 >
                     <ViewIcon />View
                 </button>
+
+                <Filters.Search />
+                <Filters.Sort />
+                <Filters.CategorySelect />
+
+ 
             </div>
 
             <Table
-                handleEditOpen={handleOpenEditForm}
-                searchQuery={filter.search}
-                filterType={filter.sort}
-                filterCat={filter.category}
-                amount={amount}
+                handleEditOpen={(element) => {
+                    setEditVisibility(true);
+                    setProductEdit(element);
+                }}
             />
 
             <CustomPopup
@@ -123,7 +86,10 @@ function AdminPanel() {
                 title="Edit product"
             >
                 <EditForm
-                    handleFormSubmit={handleSubmitForm}
+                    // handleFormSubmit={handleSubmitForm}
+                    handleFormSubmit={(value) =>
+                        setIsSuccess(value)
+                    }
                     closeForm={popupCloseHandler}
                     productProp={productEdit}
                 />

@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { getUserOrders } from "../api/order.api";
 import { useState, useEffect } from "react";
 import { Orders } from "./common/Orders";
+import { useFilter } from "../context/filterContext";
 
 function Account() {
+    const { resetFilter } = useFilter();
     const navigate = useNavigate();
     const { user, isAdmin } = useUser();
     const { id } = user;
@@ -31,6 +33,7 @@ function Account() {
                     <button
                         onClick={(e) => {
                             e.preventDefault();
+                            resetFilter();
                             navigate("/admin");
                         }}
                         className="w-32 mt-4 border-[1px] rounded-full px-3 py-1 font-semibold text-slate-200 hover:bg-green-600 bg-green-500"

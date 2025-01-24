@@ -1,15 +1,19 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useProduct } from "../../../context/dataContext";
 import { toast } from "react-toastify";
+
+import { useProduct } from "../../../context/dataContext";
+import { useFilter } from "../../../context/filterContext";
+
 import CustomPopup from "../Popup";
 import Pagination from "../../common/Pagination";
-import { useFilter } from "../../../context/filterContext";
+
+import { AMOUNT_ON_PAGE } from "../../../constants";
 import "./styles.css";
 
-function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
-    const navigate = useNavigate();
+function Table({ handleEditOpen }) {
 
+    const navigate = useNavigate();
     const columnArr = [
         "code",
         "title",
@@ -35,20 +39,21 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
     };
 
     const [warningVisibility, setWarningVisibility] = useState(false);
-
     const [idToDelete, setIdToDelete] = useState(null);
 
     const { data, deleteProduct } = useProduct();
 
     useEffect(() => {
-        const actualKeys = Object.keys(data[0]).filter((key) =>
-            columnArr.includes(key)
-        );
-        setFieldsVisibility(
-            actualKeys.map((name) => ({ name, isVisible: true }))
-        );
-        changePage(1); //  ПОСЛЕ ИЗМЕНЕНИЯ КАТЕГОРИИ ИЛИ ВВОДА В ПОИСКОВОЙ СТРОКЕ ПЕРЕХОД НА 1 СТР.
-    }, [filter.search, filter.category]);
+        if (data.length) {
+            const actualKeys = Object.keys(data[0]).filter((key) =>
+                columnArr.includes(key)
+            );
+            setFieldsVisibility(
+                actualKeys.map((name) => ({ name, isVisible: true }))
+            );
+            changePage(1);   //  ПОСЛЕ ИЗМЕНЕНИЯ КАТЕГОРИИ ИЛИ ВВОДА В ПОИСКОВОЙ СТРОКЕ ПЕРЕХОД НА 1 СТР.
+        }
+    }, [filter.search, filter.category, data]);
 
     function filterProductsArray(search) {
         const filtered = data.reduce((acc, current) => {
@@ -66,13 +71,13 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
         }, []);
 
         const result =
-            filterCat === null
+            filter.category === null
                 ? filtered
-                : filtered.filter((el) => el.type === filterCat);
+                : filtered.filter((el) => el.type === filter.category);
 
-        changeTotalPages(Math.ceil(result.length / amount));
+        changeTotalPages(Math.ceil(result.length / AMOUNT_ON_PAGE));
 
-        switch (filterType) {
+        switch (filter.sort) {
             case "price_up": {
                 return result.sort((a, b) => a.price - b.price);
             }
@@ -87,7 +92,7 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
 
     return (
         <>
-            {filterProductsArray(searchQuery).length > 0 && filter.fields && filter.fields.some((el) => el.isVisible) ? (
+            {filterProductsArray(filter.search).length > 0 && filter.fields && filter.fields.some((el) => el.isVisible) ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -102,8 +107,8 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {filterProductsArray(searchQuery)
-                            .slice(amount * (page - 1), amount * page)
+                        {filterProductsArray(filter.search)
+                            .slice(AMOUNT_ON_PAGE * (page - 1), AMOUNT_ON_PAGE * page)
                             .map((product, index) => {
                                 const { _id } = product;
 
@@ -209,6 +214,3 @@ function Table({ handleEditOpen, searchQuery, filterType, filterCat, amount }) {
 }
 
 export default Table;
-
-// Пагинация таблицы (с параметром amountPerPage)
-// Возможность скрытия колонок через чекбокс

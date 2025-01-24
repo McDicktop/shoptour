@@ -41,7 +41,7 @@ function Payment() {
         e.preventDefault();
         const { number, exp, cvc } = card;
 
-        const res = await makePaymentByOrderId(id, { number, exp, cvc });
+        const res = await makePaymentByOrderId(id, { number, exp: exp.replaceAll(" / ", ""), cvc });
 
         if (res.status === 422) {
             // Не валидные платежные данные
@@ -57,6 +57,9 @@ function Payment() {
         }
 
         if (res.message) {
+            // сохранить платежные данные
+
+            //  отправить чек по email
             toast(res.message);
             navigate("/account");
             return;
@@ -68,17 +71,82 @@ function Payment() {
         setCard((prev) => ({ ...prev, [key]: !prev[key] }));
     };
 
-    const handleInput = (e, key) => {
-        setCard((prev) => {
-          if ("1234567890 ".includes(e.nativeEvent.data) || e.nativeEvent.data === null)
-            return {...prev, [key]: e.target.value}
-          return {...prev}
-        })
+    const formatCardNumber = (value) => {
+        const onlyDigits = value.replaceAll(/\D/g, "");
+
+        const formatted = onlyDigits.match(/.{1,4}/g)?.join(" ") || "";
+        return formatted;
     };
+
+    const formatExpirationDate = (value) => {
+        const onlyDigits = value.replaceAll(/\D/g, "");
+
+        if (onlyDigits.length <= 2) {
+            return onlyDigits;
+        }
+
+        const month = onlyDigits.slice(0, 2);
+        const year = onlyDigits.slice(2);
+
+        return `${month} / ${year}`;
+    };
+
+    const handleInput = (e, key) => {
+
+        const { value } = e.target;
+
+        const formatValue = (key, value) => {
+            switch (key) {
+                case "number":
+                    return formatCardNumber(value);
+                case "exp":
+                    return formatExpirationDate(value);
+                default:
+                    return value;
+            }
+        };
+
+        const formattedValue = formatValue(key, value);
+
+        setCard((prev) => ({ ...prev, [key]: formattedValue }))
+
+        const focusNextField = (key) => {
+            switch (key) {
+                case "number":
+                    if (formattedValue.length === 19) {
+                        document.getElementById("card_exp").focus();
+                    }
+                    break;
+                case "exp":
+                    if (formattedValue.length === 7) {
+                        document.getElementById("card_cvc").focus();
+                    }
+                    break;
+                case "cvc":
+                    if (formattedValue.length === 3) {
+                        document.getElementById("card_conf").focus();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        };
+
+
+        focusNextField(key);
+    }
 
     const isSubmitActive = () => {
         const { number, exp, cvc, conf } = card;
-        return number && exp && cvc && conf;
+        return (
+            number &&
+            exp &&
+            cvc &&
+            conf &&
+            number.trim().replaceAll(" ", "").length === 16 &&
+            exp.trim().replaceAll(" / ", "").length === 4 &&
+            cvc.trim().replaceAll(" ", "").length === 3
+        );
     };
 
     return (
@@ -100,6 +168,7 @@ function Payment() {
                         onChange={(e) => handleInput(e, "number")}
                         placeholder="XXXX XXXX XXXX XXXX"
                         id="card_number"
+                        maxLength="19"
                     />
 
                     <div className="flex justify-between mb-10">
@@ -114,6 +183,7 @@ function Payment() {
                                 onChange={(e) => handleInput(e, "exp")}
                                 placeholder="MM YY"
                                 id="card_exp"
+                                maxLength={"7"}
                             />
                         </div>
 
@@ -128,6 +198,7 @@ function Payment() {
                                 onChange={(e) => handleInput(e, "cvc")}
                                 placeholder="***"
                                 id="card_cvc"
+                                maxLength="3"
                             />
                         </div>
                     </div>
@@ -167,19 +238,17 @@ function Payment() {
                     <div className="h-9 w-64 place-self-center mt-2">
                         <input
                             type="text"
-                            className={`px-2 py-1 rounded-xl w-64 ${
-                                !card.send ? "hidden" : ""
-                            }`}
+                            className={`px-2 py-1 rounded-xl w-64 ${!card.send ? "hidden" : ""
+                                }`}
                             value={`${card.email}`}
                             placeholder="e-mail"
-                            onChange={() => {}}
+                            onChange={(e) => handleInput(e, "email")}
                         />
                     </div>
 
                     <button
-                        className={`block mx-auto mt-4 py-1 w-64 rounded-full bg-sky-700 text-slate-200 ${
-                            !isSubmitActive() ? "opacity-50 cursor-default" : ""
-                        }`}
+                        className={`block mx-auto mt-4 py-1 w-64 rounded-full bg-sky-700 text-slate-200 ${!isSubmitActive() ? "opacity-50 cursor-default" : ""
+                            }`}
                         disabled={!isSubmitActive()}
                     >
                         Submit
