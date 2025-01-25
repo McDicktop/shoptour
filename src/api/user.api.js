@@ -48,3 +48,16 @@ export const createUser = async (currentUser) => {
         toast(e.response.data.message);                                     // ????????????????????????????????????
     }
 };
+
+export const sentEmail = async (userEmail) => {
+    try {
+        const res = await axios.get(backend_url + "auth/user", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return res.data;
+    } catch (e) {
+        return e;
+    }
+}

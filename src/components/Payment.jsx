@@ -39,9 +39,9 @@ function Payment() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { number, exp, cvc } = card;
+        const { number, exp, cvc, email } = card;
 
-        const res = await makePaymentByOrderId(id, { number, exp: exp.replaceAll(" / ", ""), cvc });
+        const res = await makePaymentByOrderId(id, { number, exp: exp.replaceAll(" / ", ""), cvc, email });
 
         if (res.status === 422) {
             // Не валидные платежные данные
@@ -60,6 +60,9 @@ function Payment() {
             // сохранить платежные данные
 
             //  отправить чек по email
+            
+
+
             toast(res.message);
             navigate("/account");
             return;
