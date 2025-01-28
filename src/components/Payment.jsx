@@ -5,6 +5,10 @@ import { makePaymentByOrderId } from "../api/order.api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
+import { Email } from "@smastrom/react-email-autocomplete";
+
+import './Payment.css';
+
 function Payment() {
     const navigate = useNavigate();
 
@@ -22,6 +26,16 @@ function Payment() {
 
     const [card, setCard] = useState({ ...detailsInit });
     const [price, setPrice] = useState(null);
+
+    const baseDomains = ["gmail.com", "mail.ru", "yandex.ru"];
+
+    const classNames = {
+        wrapper: 'basicWrapper',
+        dropdown: 'basicDropdown',
+        input: 'basicInput',
+        suggestion: 'basicSuggestion',
+        domain: 'basicDomain',
+     }
 
     useEffect(() => {
         const getOrder = async () => {
@@ -41,7 +55,12 @@ function Payment() {
         e.preventDefault();
         const { number, exp, cvc, email } = card;
 
-        const res = await makePaymentByOrderId(id, { number, exp: exp.replaceAll(" / ", ""), cvc, email });
+        const res = await makePaymentByOrderId(id, {
+            number,
+            exp: exp.replaceAll(" / ", ""),
+            cvc,
+            email,
+        });
 
         if (res.status === 422) {
             // Не валидные платежные данные
@@ -60,8 +79,6 @@ function Payment() {
             // сохранить платежные данные
 
             //  отправить чек по email
-            
-
 
             toast(res.message);
             navigate("/account");
@@ -95,7 +112,6 @@ function Payment() {
     };
 
     const handleInput = (e, key) => {
-
         const { value } = e.target;
 
         const formatValue = (key, value) => {
@@ -111,7 +127,7 @@ function Payment() {
 
         const formattedValue = formatValue(key, value);
 
-        setCard((prev) => ({ ...prev, [key]: formattedValue }))
+        setCard((prev) => ({ ...prev, [key]: formattedValue }));
 
         const focusNextField = (key) => {
             switch (key) {
@@ -135,9 +151,8 @@ function Payment() {
             }
         };
 
-
         focusNextField(key);
-    }
+    };
 
     const isSubmitActive = () => {
         const { number, exp, cvc, conf } = card;
@@ -239,19 +254,32 @@ function Payment() {
                     </div>
 
                     <div className="h-9 w-64 place-self-center mt-2">
-                        <input
-                            type="text"
+                        {/* <input
+                            type="email"
+                            
                             className={`px-2 py-1 rounded-xl w-64 ${!card.send ? "hidden" : ""
                                 }`}
                             value={`${card.email}`}
                             placeholder="e-mail"
                             onChange={(e) => handleInput(e, "email")}
+                        /> */}
+
+                        <Email
+                            onChange={(e) => {
+                                setCard((prev) => ({ ...prev, ["email"]: e }));
+                            }}
+                            baseList={baseDomains}
+                            refineList={baseDomains}
+
+                            value={card.email}
+                            classNames={classNames}
                         />
                     </div>
 
                     <button
-                        className={`block mx-auto mt-4 py-1 w-64 rounded-full bg-sky-700 text-slate-200 ${!isSubmitActive() ? "opacity-50 cursor-default" : ""
-                            }`}
+                        className={`block mx-auto mt-4 py-1 w-64 rounded-full bg-sky-700 text-slate-200 ${
+                            !isSubmitActive() ? "opacity-50 cursor-default" : ""
+                        }`}
                         disabled={!isSubmitActive()}
                     >
                         Submit

@@ -16,6 +16,8 @@ import BasketPage from "./components/Basket";
 import Payment from "./components/Payment";
 import LoaderComponent from "./components/layout/LoaderComponent";
 
+import { useEffect } from "react";
+
 import { useUser } from "./context/userContext";
 
 import "react-toastify/dist/ReactToastify.css";

@@ -7,10 +7,15 @@ import { userLogin } from "../api/user.api";
 import hide from "./assets/imgs/hide.png";
 import show from "./assets/imgs/show.png";
 
+import { useBasket } from "../context/basketContext";
+import { addOrder } from "../api/order.api";
+
 function SigninForm() {
     const navigate = useNavigate();
 
-    const { handleLogin } = useUser();
+    const { handleLogin, user: userContObj } = useUser();
+
+    const { deleteSelectedProducts, removeBasketProduct } = useBasket();
 
     const [user, setUser] = useState({
         username: "",
@@ -48,6 +53,42 @@ function SigninForm() {
                 if (data.token) {
                     toast("Авторизация прошла успешно");
                     await handleLogin(data.token);
+
+                    // console.log(data.values)
+                    const order = JSON.parse(localStorage.getItem('order_preview'))
+                    if(order){
+                        order.user = {
+                            _id: data.values._id,
+                            name: data.values.name,
+                            email: data.values.email,
+                        }
+
+                        // console.log(order)
+
+                        const newOrder = await addOrder(order);
+
+                    
+                        if (!newOrder.message) {
+
+                            toast("Order placed!");
+
+                            for(let item of order.order.items) {
+                                removeBasketProduct(item._id)
+                            }
+
+                            localStorage.removeItem('order_preview')
+
+                            window.location.href = `/payment/${newOrder.data._id}`;
+                            
+                            return;
+                        }
+                        if (!newOrder.response.data.message) {
+                            toast("Internal server error");
+                            return;
+                        }
+                        toast(newOrder.response.data.message);
+                    }
+                    
                     navigate("/");
                 } else {
                     toast(data);

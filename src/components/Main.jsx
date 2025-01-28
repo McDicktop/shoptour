@@ -5,6 +5,7 @@ import { getProducts } from "../api/product.api";
 
 import { useBasket } from "../context/basketContext";
 import { useFilter } from "../context/filterContext";
+import { useUser } from "../context/userContext";
 
 import Pagination from "./common/Pagination";
 import { Filters } from "./layout/Filters";

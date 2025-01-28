@@ -59,10 +59,7 @@ function OrderComponent({ promoValue, delivery, address }) {
 
     const handleOrder = async () => {
         const { id: _id, name, email } = user;
-        if (!_id || !name || !email) {
-            toast("Log in to make order");
-            return;
-        }
+    
         if (!delivery()) {
             toast("Select delivery type to make order");
             return;
@@ -78,9 +75,8 @@ function OrderComponent({ promoValue, delivery, address }) {
         }
 
         const currentDate = new Date();
-
         const orderObj = {
-            user: { _id, name, email },
+            user: { },
             address: { city, street, house, app },
             order: {
                 items: getOrderItems(),
@@ -95,6 +91,17 @@ function OrderComponent({ promoValue, delivery, address }) {
                     : currentDate.setDate(currentDate.getDate() + 3),
             ],
         };
+
+        if (!_id || !name || !email) {
+            toast("Log in to make order");
+
+            localStorage.setItem('order_preview',  JSON.stringify(orderObj));
+            navigate(`/signin`);
+
+            return;
+        }
+
+        orderObj.user = { _id, name, email };
 
         const newOrder = await addOrder(orderObj);
 
