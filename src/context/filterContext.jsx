@@ -26,15 +26,15 @@ export const FilterProvider = ({ children }) => {
     }
 
     const setCategory = (category) => {
-        setFilter({ ...filter, ['category']: category })
+        setFilter((prev) => ({ ...prev, ['category']: category }))
     };
 
     const setSort = (sort) => {
-        setFilter({ ...filter, ['sort']: sort })
+        setFilter((prev) => ({ ...prev, ['sort']: sort }))
     };
 
     const setSearch = (search) => {
-        setFilter({ ...filter, ['search']: search })
+        setFilter((prev) => ({ ...prev, ['search']: search }))
     }
 
     const [page, setPage] = useState(1);
@@ -50,7 +50,7 @@ export const FilterProvider = ({ children }) => {
     }
 
     const setFieldsVisibility = (fields) => {
-        setFilter({ ...filter, ['fields']: fields })
+        setFilter((prev) => ({ ...prev, ['fields']: fields }))
     }
 
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -12,7 +12,6 @@ import { AMOUNT_ON_PAGE } from "../../../constants";
 import "./styles.css";
 
 function Table({ handleEditOpen }) {
-
     const navigate = useNavigate();
     const columnArr = [
         "code",
@@ -34,34 +33,37 @@ function Table({ handleEditOpen }) {
         setFieldsVisibility,
     } = useFilter();
 
-    const popupCloseHandler = () => {
-        setWarningVisibility(false);
-    };
-
     const [warningVisibility, setWarningVisibility] = useState(false);
     const [idToDelete, setIdToDelete] = useState(null);
 
     const { data, deleteProduct } = useProduct();
 
     useEffect(() => {
-        if (data.length) {
-            const actualKeys = Object.keys(data[0]).filter((key) =>
-                columnArr.includes(key)
-            );
+        if (!data || data.length === 0) return;
+
+        const actualKeys = Object.keys(data[0]).filter((key) =>
+            columnArr.includes(key)
+        );
+
+        console.log("Поле: ", actualKeys);
+        console.log(setFieldsVisibility)
+
+        if (actualKeys.length > 0) {
             setFieldsVisibility(
                 actualKeys.map((name) => ({ name, isVisible: true }))
             );
-            changePage(1);   //  ПОСЛЕ ИЗМЕНЕНИЯ КАТЕГОРИИ ИЛИ ВВОДА В ПОИСКОВОЙ СТРОКЕ ПЕРЕХОД НА 1 СТР.
         }
-    }, [filter.search, filter.category, data]);
+    }, [data]);
 
-    function filterProductsArray(search) {
-        const filtered = data.reduce((acc, current) => {
+    const filterProductsArray = useMemo(() => {
+        // console.log(data)
+
+        let result = data.reduce((acc, current) => {
             for (const key of columnArr) {
                 if (
                     String(current[key])
                         .toLowerCase()
-                        .includes(search.toLowerCase())
+                        .includes(filter.search.toLowerCase())
                 ) {
                     acc.push(current);
                     return acc;
@@ -70,29 +72,41 @@ function Table({ handleEditOpen }) {
             return acc;
         }, []);
 
-        const result =
-            filter.category === null
-                ? filtered
-                : filtered.filter((el) => el.type === filter.category);
-
-        changeTotalPages(Math.ceil(result.length / AMOUNT_ON_PAGE));
+        if (filter.category !== null) {
+            result = result.filter((el) => el.type === filter.category);
+        }
 
         switch (filter.sort) {
             case "price_up": {
-                return result.sort((a, b) => a.price - b.price);
+                result.sort((a, b) => a.price - b.price);
+                break;
             }
             case "price_down": {
-                return result.sort((a, b) => b.price - a.price);
+                result.sort((a, b) => b.price - a.price);
+                break;
             }
-            default: {
-                return result;
-            }
+            default:
         }
-    }
+
+        return result;
+    }, [data, filter.search, filter.category, filter.fields]);
+
+    useEffect(() => {
+        changePage(1);
+        changeTotalPages(
+            Math.ceil(filterProductsArray.length / AMOUNT_ON_PAGE)
+        );
+    }, [filterProductsArray.length]);
+
+    const popupCloseHandler = () => {
+        setWarningVisibility(false);
+    };
 
     return (
         <>
-            {filterProductsArray(filter.search).length > 0 && filter.fields && filter.fields.some((el) => el.isVisible) ? (
+            {filterProductsArray.length > 0 &&
+            filter.fields &&
+            filter.fields.some((el) => el.isVisible) ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -107,8 +121,11 @@ function Table({ handleEditOpen }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {filterProductsArray(filter.search)
-                            .slice(AMOUNT_ON_PAGE * (page - 1), AMOUNT_ON_PAGE * page)
+                        {filterProductsArray
+                            .slice(
+                                AMOUNT_ON_PAGE * (page - 1),
+                                AMOUNT_ON_PAGE * page
+                            )
                             .map((product, index) => {
                                 const { _id } = product;
 
@@ -131,8 +148,8 @@ function Table({ handleEditOpen }) {
                                                 {key !== "sale"
                                                     ? value
                                                     : !value.status
-                                                        ? "No sale"
-                                                        : value.value}
+                                                    ? "No sale"
+                                                    : value.value}
                                             </td>
                                         ))}
                                         <td
@@ -180,6 +197,7 @@ function Table({ handleEditOpen }) {
                         textAlign: "center",
                     }}
                 >
+                    {console.log(filterProductsArray)}
                     No products found...
                 </h1>
             )}
