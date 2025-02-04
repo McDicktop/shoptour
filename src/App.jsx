@@ -8,7 +8,7 @@ import {
 import NavLayout from "./components/layout/NavLayout";
 import SignupForm from "./components/Signup";
 import SigninForm from "./components/Signin";
-import AdminPanel from "./components/adminPanel";
+import AdminPanel from "./components/AdminPanel";
 import Account from "./components/Account";
 import Main from "./components/Main";
 import ProductView from "./components/ProductView";
