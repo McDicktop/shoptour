@@ -7,4 +7,7 @@ export default defineConfig({
   resolve: {
     mainFields: [],
   },
+  server: {
+    port: 3000,
+  },
 })

@@ -26,7 +26,9 @@
     "react-toastify": "^10.0.6",
     "react-yandex-maps": "^4.6.0",
     "reactjs-popup": "^2.0.6",
-    "shop-homework": "file:"
+    "shop-homework": "file:",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
